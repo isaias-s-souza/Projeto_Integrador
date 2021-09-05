@@ -8,6 +8,7 @@ class Entidade:
         self.__ehFornecedor     = ehFornecedor
         self.__ehFuncionario    = ehFuncionario
         self.__endereco         = endereco
+        self.__teste            = teste
 
     #Getters e Setters
     #CÓDIGO
