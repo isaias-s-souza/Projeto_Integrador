@@ -8,7 +8,7 @@ class Entidade:
         self.__ehFornecedor     = ehFornecedor
         self.__ehFuncionario    = ehFuncionario
         self.__endereco         = endereco
-        self.__teste            = teste
+
 
     #Getters e Setters
     #CÓDIGO
@@ -50,3 +50,11 @@ class Entidade:
     def set_endereco(self, endereco):
         self.__endereco = endereco
 
+    #Métdos da Entidade
+    def imprime_dados_entidade(self,tipoEntidade):
+        print("Codigo     ----- {}".format(self.__codigo))
+        print("Nome       ----- {}".format(self.__nome))
+        print("Endereco   ----- {}".format( self.__endereco))
+        if tipoEntidade==self.__ehCliente
+            print("Tipo Entidade   ----- {}".format(self.__ehCliente))
+        #else if
