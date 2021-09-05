@@ -51,10 +51,14 @@ class Entidade:
         self.__endereco = endereco
 
     #Métdos da Entidade
-    def imprime_dados_entidade(self,tipoEntidade):
+    def imprime_dados_entidade(self):
+        print("\n-----------DADOS ENTIDADE-----------")
         print("Codigo     ----- {}".format(self.__codigo))
         print("Nome       ----- {}".format(self.__nome))
         print("Endereco   ----- {}".format( self.__endereco))
-        if tipoEntidade==self.__ehCliente
-            print("Tipo Entidade   ----- {}".format(self.__ehCliente))
-        #else if
+        if self.__ehCliente == True:
+            print("Tipo Entidade   ----- Cliente")
+        if self.__ehFornecedor == True:
+            print("Tipo Entidade   ----- Fornecedor")
+        if self.__ehFuncionario == True:
+            print("Tipo Entidade   ----- Funcionário")
