@@ -1,12 +1,12 @@
 class Entidade:
-    def __init__(self, codigo, nome, ehCliente, ehFornecedor, ehFuncionario, endereco):
+    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco):
 
         #Atributos Privados
         self.__codigo           = codigo
         self.__nome             = nome
-        self.__ehCliente        = ehCliente
-        self.__ehFornecedor     = ehFornecedor
-        self.__ehFuncionario    = ehFuncionario
+        self.__cliente          = cliente
+        self.__fornecedor       = fornecedor
+        self.__funcionario      = funcionario
         self.__endereco         = endereco
 
 
@@ -24,24 +24,24 @@ class Entidade:
 
     #É CLIENTE
     def get_cliente(self):
-        return self.__ehCliente
+        return self.__cliente
 
     def set_cliente(self, eh_cliente):
-        self.__ehCliente = eh_cliente
+        self.__cliente = eh_cliente
 
     # É FORNECEDOR
     def get_fornecedor(self):
-        return self.__ehFornecedor
+        return self.__fornecedor
 
     def set_fornecedor(self, eh_fornecedor):
-        self.__ehFornecedor = eh_fornecedor
+        self.__fornecedor = eh_fornecedor
 
     # É FUNCIONÁRIO
     def get_funcionario(self):
-        return self.__ehFuncionario
+        return self.__funcionario
 
     def set_funcionario(self, eh_funcionario):
-        self.__ehFuncionario = eh_funcionario
+        self.__funcionario = eh_funcionario
 
     #ENDEREÇO
     def get_endereco(self):
@@ -50,15 +50,43 @@ class Entidade:
     def set_endereco(self, endereco):
         self.__endereco = endereco
 
-    #Métdos da Entidade
+    #Métodos da Entidade
     def imprime_dados_entidade(self):
         print("\n-----------DADOS ENTIDADE-----------")
         print("Codigo     ----- {}".format(self.__codigo))
         print("Nome       ----- {}".format(self.__nome))
         print("Endereco   ----- {}".format( self.__endereco))
-        if self.__ehCliente == True:
-            print("Tipo Entidade   ----- Cliente")
-        if self.__ehFornecedor == True:
-            print("Tipo Entidade   ----- Fornecedor")
-        if self.__ehFuncionario == True:
-            print("Tipo Entidade   ----- Funcionário")
+
+        print("\nTipo Entidade:")
+        if self.__cliente == True:
+            print("Cliente [X]")
+        else:
+            print("Cliente [ ]")
+
+        if self.__fornecedor == True:
+            print("Fornecedor [X]")
+        else:
+            print("Fornecedor [ ]")
+
+        if self.__funcionario == True:
+            print("Funcionário [X]")
+        else:
+            print("Funcionário [ ]")
+
+        print("\n")
+
+    #Definição de atributos da classe como propriedade
+    @property
+    def cliente(self):
+        return self.__cliente
+    @property
+    def fornecedor(self):
+        return self.__fornecedor
+    @property
+    def funcionario(self):
+        return self.__funcionario
+
+    # Setters
+    @cliente.setter
+    def cliente(self, cliente):
+        self.__cliente = cliente
