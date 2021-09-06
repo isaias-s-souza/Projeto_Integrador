@@ -1,4 +1,5 @@
 class Entidade:
+    #Metódo construtor
     def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco):
 
         #Atributos Privados
@@ -45,9 +46,9 @@ class Entidade:
     #Métodos da Entidade
     def imprime_dados_entidade(self):
         print("-----------DADOS ENTIDADE-----------")
-        print("Codigo     ----- {}".format(self.__codigo))
+        print("Código     ----- {}".format(self.__codigo))
         print("Nome       ----- {}".format(self.__nome))
-        print("Endereco   ----- {}".format( self.__endereco))
+        print("Endereço   ----- {}".format( self.__endereco))
 
         print("\nTipo Entidade:")
         if self.__cliente == True:
