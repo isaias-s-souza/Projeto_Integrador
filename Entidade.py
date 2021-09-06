@@ -9,6 +9,7 @@ class Entidade:
         self.__funcionario      = funcionario
         self.__endereco         = endereco
 
+        print("Cliente ", self.__nome, " cadastrado(a) com sucesso!")
 
     #Getters e Setters
     #CÓDIGO
@@ -23,23 +24,14 @@ class Entidade:
         self.__nome = nome
 
     #É CLIENTE
-    def get_cliente(self):
-        return self.__cliente
-
     def set_cliente(self, eh_cliente):
         self.__cliente = eh_cliente
 
     # É FORNECEDOR
-    def get_fornecedor(self):
-        return self.__fornecedor
-
     def set_fornecedor(self, eh_fornecedor):
         self.__fornecedor = eh_fornecedor
 
     # É FUNCIONÁRIO
-    def get_funcionario(self):
-        return self.__funcionario
-
     def set_funcionario(self, eh_funcionario):
         self.__funcionario = eh_funcionario
 
@@ -52,7 +44,7 @@ class Entidade:
 
     #Métodos da Entidade
     def imprime_dados_entidade(self):
-        print("\n-----------DADOS ENTIDADE-----------")
+        print("-----------DADOS ENTIDADE-----------")
         print("Codigo     ----- {}".format(self.__codigo))
         print("Nome       ----- {}".format(self.__nome))
         print("Endereco   ----- {}".format( self.__endereco))
@@ -85,8 +77,17 @@ class Entidade:
     @property
     def funcionario(self):
         return self.__funcionario
+    @property
+    def nome(self):
+        return self.__nome
 
-    # Setters
+    #Setters
     @cliente.setter
     def cliente(self, cliente):
         self.__cliente = cliente
+    @fornecedor.setter
+    def fornecedor(self, fornecedor):
+        self.__fornecedor = fornecedor
+    @funcionario.setter
+    def funcionario(self, funcionario):
+        self.__funcionario = funcionario
