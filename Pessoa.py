@@ -1,4 +1,4 @@
-class Entidade:
+class Pessoa:
     #Metódo construtor
     def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco):
 
@@ -44,7 +44,7 @@ class Entidade:
         self.__endereco = endereco
 
     #Métodos da Entidade
-    def imprime_dados_entidade(self):
+    def imprime_dados_pessoa(self):
         print("-----------DADOS ENTIDADE-----------")
         print("Código     ----- {}".format(self.__codigo))
         print("Nome       ----- {}".format(self.__nome))
