@@ -1,10 +1,9 @@
-from Pessoa import Pessoa
+from pessoa import Pessoa
 
 print("\n")
 EnderecoPessoa = "AV: Afonso Pena,233, Centro, Muzambinho-MG"
 pessoa1 = Pessoa(1, "Maria Aparecida da Silva", True, False, False, EnderecoPessoa)
-pessoa1.imprime_dad
-os_pessoa()
+pessoa1.imprime_dados_pessoa()
 
 print("Motivo atualização dados (NOME): Maria sabendo sobre seus direitos de acordo com a LGPD, "
       "solicitou conferir seu nome no cadastro,\npois descobriu que seu nome constava errado "
