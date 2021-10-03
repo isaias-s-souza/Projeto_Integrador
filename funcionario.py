@@ -1,6 +1,8 @@
-class Funcionario:
-    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, login, senha):
-        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco)
+from pessoa import Pessoa
+
+class Funcionario(Pessoa):
+    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha):
+        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj)
 
         self.__login = login
         self.__senha = senha

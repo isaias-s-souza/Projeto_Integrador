@@ -8,6 +8,9 @@
     </head>
     <body>
         <div class="container">
+
+            <!-- Indica local onde o restante da página será carregado para cada página que tem como template padrão este arquivo -->
+            {%block conteudo %} {%endblock %}
             <div class="page-header">
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
@@ -18,15 +21,9 @@
                         </ul>
                     {% endif %}
                 {% endwith %}
-                <h1>{{titulo}}</h1>
             </div>
-
-            <!-- Indica local onde o restante da página será carregado para cada página que tem como template padrão este arquivo -->
-            {%block conteudo %} {%endblock %}
-
-
-
         </div>
-        <script src = "{{url_for('static', filename = 'bootstrap.js')}}"></script>
+        <script src = "{{url_for('static', filename = 'bootstrap.bundle.js')}}"></script>
+        <script src = "{{url_for('static', filename = 'global.js')}}"></script>
     </body>
 </html>

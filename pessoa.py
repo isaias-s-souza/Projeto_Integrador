@@ -1,6 +1,6 @@
 class Pessoa:
     #Metódo construtor
-    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco):
+    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj):
 
         #Atributos Privados
         self.__codigo           = codigo
@@ -9,6 +9,9 @@ class Pessoa:
         self.__fornecedor       = fornecedor
         self.__funcionario      = funcionario
         self.__endereco         = endereco
+        self.__cpf              = cpf
+        self.__cnpj             = cnpj
+
 
         print("Cliente ", self.__nome, " cadastrado(a) com sucesso!")
 
@@ -42,6 +45,19 @@ class Pessoa:
 
     def set_endereco(self, endereco):
         self.__endereco = endereco
+
+    #CPF
+    def get_cpf(self):
+        return self.__cpf
+
+    def set_cpf(self,cpf):
+        self.__cpf = cpf
+    #CNPJ
+    def get_cnpj(self):
+        return self.__cnpj
+
+    def set_cpf(self, cnpj):
+        self.__cnpj = cnpj
 
     #Métodos da Entidade
     def imprime_dados_pessoa(self):
