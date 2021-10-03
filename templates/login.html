@@ -1,10 +1,20 @@
 {% extends "template.html" %} <!-- Seta template.html como parte fundamental desta página-->
 {%block conteudo %} <!--Seta INÍCIO do layout dessa página para que páginas de template façam relação-->
-
-        <form method="POST" action="/autenticar">
-            <input type = "hidden" name = "proxima" value = "{{proxima}}">
-            <p><label>Nome de usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
-            <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
-            <p><button class="btn btn-primary" type="submit">Entrar</button></p>
-        </form>
+        <center>
+        <div class="container-fluid"
+             style="padding-top:15%;
+                    padding-bottom:20%;
+                    padding-left:25%;
+                    padding-right:25%">
+        <fieldset>
+            <legend>Login</legend>
+            <form method="POST" action="/autenticar">
+                <input type = "hidden" name = "proxima" value = "{{proxima}}">
+                <p><label style="font-size:20px">Usuário</label> <input style = "width:85%" class="form-control" type="text"  name="usuario" required></p>
+                <p><label style="font-size:20px">Senha</label> <input style = "width:85%" class="form-control" type="password" name="senha" required></p>
+                <p><button class="btn btn-primary" type="submit">Entrar</button></p>
+            </form>
+        </fieldset>
+        </div>
+        </center>
 {%endblock %} <!--Seta FIM do layout dessa página para que páginas de template façam relação-->

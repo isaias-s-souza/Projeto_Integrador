@@ -22,6 +22,7 @@ def login():
     proxima = request.args.get('proxima')
     if proxima == None:
         proxima = ''
+
     return render_template('login.html', proxima = proxima)
 
 @app.route('/autenticar', methods =['POST', ])
@@ -42,7 +43,6 @@ def autenticar():
 @app.route('/logout')
 def logout():
     session['usuario_logado'] = None
-    flash('Usuário deslogado com sucesso!')
     return redirect('/login')
 
 if __name__ == '__main__':
