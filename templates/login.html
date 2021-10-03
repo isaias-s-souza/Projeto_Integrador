@@ -1,0 +1,10 @@
+{% extends "template.html" %} <!-- Seta template.html como parte fundamental desta página-->
+{%block conteudo %} <!--Seta INÍCIO do layout dessa página para que páginas de template façam relação-->
+
+        <form method="POST" action="/autenticar">
+            <input type = "hidden" name = "proxima" value = "{{proxima}}">
+            <p><label>Nome de usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
+            <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
+            <p><button class="btn btn-primary" type="submit">Entrar</button></p>
+        </form>
+{%endblock %} <!--Seta FIM do layout dessa página para que páginas de template façam relação-->
