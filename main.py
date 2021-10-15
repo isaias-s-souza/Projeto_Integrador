@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, session, flash
-from funcionario import Funcionario
+from models import Funcionario
 
 app = Flask(__name__)
 app.secret_key = 'SISTEMAFINANCEIRO'
+
+## CONECTAR COM O SQL SERVER
 
 funcionario1 = Funcionario(1, "Administrador", False, False, True, " ", " ", " ", "admin", "123")
 funcionario2 = Funcionario(2, "Operador", False, False, True, " ", " ", " ", "op", "1234")
