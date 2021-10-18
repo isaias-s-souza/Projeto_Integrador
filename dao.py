@@ -1,18 +1,38 @@
 import pyodbc
 #https://www.sqlshack.com/performing-crud-operations-with-a-python-sql-library-for-sql-server/
-from models import Funcionario
 
-SQL_CRIA_PESSOA =           'INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, ' \
-                            'FUNCIONARIO, LOGIN, SENHA, ATIVO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+SQL_CRIA_PESSOA =           'INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
+                            'SENHA, ATIVO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
 SQL_CRIA_CONTA_EXTRATO  =   'INSERT INTO CONTA_EXTRATO(NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO)' \
                             'VALUES(?, ?, ?, ?, ?, ?)'
-conn = pyodbc.connect('Driver={SQL Server};' +
-                      'Server=DESKTOP-RRJIH9Q\SIS_FIN;' +
-                      'Database=SISTEMA_FINANCEIRO;' +
-                      'UID=sa;' +
-                      'PWD=2021financesys;' +
-                      'Trusted_Connection=no;')
-cursor = conn.cursor()
 
-cursor.execute(SQL_CRIA_PESSOA, 'teste', 'teste', 'teste', 'teste', True, True, True, '', '', True)
-conn.commit()
+class FuncionarioDao:
+    def __init__(self, db):
+        self.__db = db
+
+    def salvar(self, funcionario):
+        cursor = self.__db.cursor()
+
+        dados_funcionario_Insercao = [  funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
+                                        funcionario.get_cnpj(), False, False, True,
+                                        funcionario.login, funcionario.get_senha(), True]
+
+        if not(funcionario.get_codigo()):
+            cursor.execute(SQL_CRIA_PESSOA, dados_funcionario_Insercao)
+        self.__db.commit()
+        return funcionario
+
+class ContaExtratoDao:
+    def __init__(self, db):
+        self.__db = db
+
+    def salvar(self, conta_extrato):
+        cursor = self.__db.cursor()
+
+        dados_conta_extrato_insercao = [conta_extrato.get_nome(), conta_extrato.get_descricao(),
+                                        conta_extrato.get_numero_conta(), conta_extrato.saldo_inicial, True]
+
+        if not(conta_extrato.get_codigo()):
+            cursor.execute(SQL_CRIA_CONTA_EXTRATO, dados_conta_extrato_insercao)
+        self.__db.commit()
+        return conta_extrato

@@ -1,10 +1,21 @@
 from flask import Flask, render_template, request, redirect, session, flash
-from models import Funcionario
+import pyodbc
+from models import Funcionario, ContaExtrato
+from dao import ContaExtratoDao, FuncionarioDao
+
 
 app = Flask(__name__)
 app.secret_key = 'SISTEMAFINANCEIRO'
 
-## CONECTAR COM O SQL SERVER
+DB = pyodbc.connect('Driver={SQL Server};' +
+                      'Server=DESKTOP-RRJIH9Q\SIS_FIN;' +
+                      'Database=SISTEMA_FINANCEIRO;' +
+                      'UID=sa;' +
+                      'PWD=2021financesys;' +
+                      'Trusted_Connection=no;')
+
+conta_extrato_dao   = ContaExtratoDao(DB)
+funcionario_dao     = FuncionarioDao(DB)
 
 funcionario1 = Funcionario(1, "Administrador", False, False, True, " ", " ", " ", "admin", "123")
 funcionario2 = Funcionario(2, "Operador", False, False, True, " ", " ", " ", "op", "1234")
@@ -18,6 +29,27 @@ def index():
     else:
         return render_template('menu.html')
 
+@app.route('/conta_extrato')
+def conta_extrato():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect('/login?proxima=')
+    else:
+        return render_template('conta_extrato.html')
+
+
+@app.route('/criar_conta_extrato', methods = ['POST', ])
+def criar_conta_extrato():
+    nome            = request.form['nome']
+    descricao       = request.form['descricao']
+    agencia         = request.form['agencia']
+    conta           = request.form['conta']
+    saldo_inicial   = request.form['saldo_inicial']
+
+    nova_conta_extrato = ContaExtrato(nome, descricao, agencia, conta, saldo_inicial)
+
+    ContaExtratoDao.salvar(nova_conta_extrato)
+
+    return redirect('/')
 
 @app.route('/login')
 def login():

@@ -1,6 +1,6 @@
 class Pessoa:
     #Metódo construtor
-    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj):
+    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo):
 
         #Atributos Privados
         self.__codigo           = codigo
@@ -11,6 +11,7 @@ class Pessoa:
         self.__cliente          = cliente
         self.__fornecedor       = fornecedor
         self.__funcionario      = funcionario
+        self.__ativo            = ativo
 
 
         #print("Cliente ", self.__nome, " cadastrado(a) com sucesso!")
@@ -97,18 +98,26 @@ class Pessoa:
     @property
     def nome(self):
         return self.__nome
+    @property
+    def ativo(self):
+        return self.__ativo
 
     #Setters
     @cliente.setter
     def cliente(self, cliente):
         self.__cliente = cliente
+
     @fornecedor.setter
     def fornecedor(self, fornecedor):
         self.__fornecedor = fornecedor
+
     @funcionario.setter
     def funcionario(self, funcionario):
         self.__funcionario = funcionario
 
+    @ativo.setter
+    def funcionario(self, ativo):
+        self.__ativo = ativo
         
 class Funcionario(Pessoa):
     def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha):
