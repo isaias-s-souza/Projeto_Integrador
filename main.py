@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.secret_key = 'SISTEMAFINANCEIRO'
 
 DB = pyodbc.connect('Driver={SQL Server};' +
-                      'Server=DESKTOP-RRJIH9Q\SIS_FIN;' +
+                      'Server=DESKTOP-M3PBHAT\TESTE_DB;' +
                       'Database=SISTEMA_FINANCEIRO;' +
                       'UID=sa;' +
                       'PWD=2021financesys;' +
@@ -17,8 +17,8 @@ DB = pyodbc.connect('Driver={SQL Server};' +
 conta_extrato_dao   = ContaExtratoDao(DB)
 funcionario_dao     = FuncionarioDao(DB)
 
-funcionario1 = Funcionario(1, "Administrador", False, False, True, " ", " ", " ", "admin", "123")
-funcionario2 = Funcionario(2, "Operador", False, False, True, " ", " ", " ", "op", "1234")
+funcionario1 = Funcionario(1, "Administrador", False, False, True, " ", " ", " ", "admin", "123", True)
+funcionario2 = Funcionario(2, "Operador", False, False, True, " ", " ", " ", "op", "1234", True)
 
 funcionarios = {funcionario1.login:funcionario1, funcionario2.login:funcionario2}
 
@@ -45,9 +45,9 @@ def criar_conta_extrato():
     conta           = request.form['conta']
     saldo_inicial   = request.form['saldo_inicial']
 
-    nova_conta_extrato = ContaExtrato(nome, descricao, agencia, conta, saldo_inicial)
+    nova_conta_extrato = ContaExtrato(nome, descricao, agencia, conta, saldo_inicial, True)
 
-    ContaExtratoDao.salvar(nova_conta_extrato)
+    conta_extrato_dao.salvar(nova_conta_extrato)
 
     return redirect('/')
 

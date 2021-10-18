@@ -120,8 +120,8 @@ class Pessoa:
         self.__ativo = ativo
         
 class Funcionario(Pessoa):
-    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha):
-        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj)
+    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha, ativo):
+        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo)
 
         self.__login = login
         self.__senha = senha
@@ -143,13 +143,20 @@ class Funcionario(Pessoa):
         self.__senha = senha
 
 class ContaExtrato:
-    def __init__(self, nome, descricao, agencia, numero_conta, saldo_inicial, ativo):
+    def __init__(self, nome, descricao, agencia, numero_conta, saldo_inicial, ativo, codigo = None):
+        self.__codigo        = codigo
         self.__nome          = nome
         self.__descricao     = descricao
         self.__agencia       = agencia
         self.__numero_conta  = numero_conta
         self.__saldo_inicial = saldo_inicial
         self.__ativo         = ativo
+
+    def get_codigo(self):
+        return self.__codigo
+
+    def set_codigo(self, codigo):
+        self.__codigo = codigo
 
     def get_nome(self):
         return self.__nome
@@ -166,7 +173,7 @@ class ContaExtrato:
     def get_numero_conta(self):
         return self.__numero_conta
 
-    def set_numero_conta(self, nnumero_conta):
+    def set_numero_conta(self, numero_conta):
         self.__numero_conta = numero_conta
 
 
@@ -175,7 +182,7 @@ class ContaExtrato:
         return self.__agencia
 
     @agencia.setter
-    def agencia(self,agencia):
+    def agencia(self, agencia):
         self.__agencia= agencia
 
     @property

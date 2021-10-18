@@ -14,8 +14,9 @@ class FuncionarioDao:
         cursor = self.__db.cursor()
 
         dados_funcionario_Insercao = [  funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
-                                        funcionario.get_cnpj(), False, False, True,
-                                        funcionario.login, funcionario.get_senha(), True]
+                                        funcionario.get_cnpj(), funcionario.cliente, funcionario.fornecedor,
+                                        funcionario.funcionario, funcionario.login, funcionario.get_senha(),
+                                        funcionario.Ativo]
 
         if not(funcionario.get_codigo()):
             cursor.execute(SQL_CRIA_PESSOA, dados_funcionario_Insercao)
@@ -26,12 +27,11 @@ class ContaExtratoDao:
     def __init__(self, db):
         self.__db = db
 
+
     def salvar(self, conta_extrato):
         cursor = self.__db.cursor()
-
-        dados_conta_extrato_insercao = [conta_extrato.get_nome(), conta_extrato.get_descricao(),
-                                        conta_extrato.get_numero_conta(), conta_extrato.saldo_inicial, True]
-
+        dados_conta_extrato_insercao = [conta_extrato.get_nome(), conta_extrato.get_descricao(), conta_extrato.agencia,
+                                        conta_extrato.get_numero_conta(), conta_extrato.saldo_inicial, conta_extrato.ativo]
         if not(conta_extrato.get_codigo()):
             cursor.execute(SQL_CRIA_CONTA_EXTRATO, dados_conta_extrato_insercao)
         self.__db.commit()
