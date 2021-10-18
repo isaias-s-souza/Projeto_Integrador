@@ -45,6 +45,7 @@ def autenticar():
 @app.route('/logout')
 def logout():
     session['usuario_logado'] = None
+    flash('Nenhum usuário logado')
     return redirect('/login')
 
 if __name__ == '__main__':

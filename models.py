@@ -132,3 +132,55 @@ class Funcionario(Pessoa):
 
     def set_senha(self, senha):
         self.__senha = senha
+
+class ContaExtrato:
+    def __init__(self, nome, descricao, agencia, numero_conta, saldo_inicial, ativo):
+        self.__nome          = nome
+        self.__descricao     = descricao
+        self.__agencia       = agencia
+        self.__numero_conta  = numero_conta
+        self.__saldo_inicial = saldo_inicial
+        self.__ativo         = ativo
+
+    def get_nome(self):
+        return self.__nome
+
+    def set_nome(self, nome):
+        self.__nome = nome
+
+    def get_descricao(self):
+        return self.__descricao
+
+    def set_descricao(self, descricao):
+        self.__descricao = descricao
+
+    def get_numero_conta(self):
+        return self.__numero_conta
+
+    def set_numero_conta(self, nnumero_conta):
+        self.__numero_conta = numero_conta
+
+
+    @property
+    def agencia(self):
+        return self.__agencia
+
+    @agencia.setter
+    def agencia(self,agencia):
+        self.__agencia= agencia
+
+    @property
+    def saldo_inicial(self):
+        return self.__saldo_inicial
+
+    @saldo_inicial.setter
+    def saldo_inicial(self, saldo_inicial):
+        self.__saldo_inicial = saldo_inicial
+
+    @property
+    def ativo(self):
+        return self.__ativo
+
+    @ativo.setter
+    def ativo(self, ativo):
+        self.__ativo = ativo
