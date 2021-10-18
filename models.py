@@ -5,15 +5,15 @@ class Pessoa:
         #Atributos Privados
         self.__codigo           = codigo
         self.__nome             = nome
-        self.__cliente          = cliente
-        self.__fornecedor       = fornecedor
-        self.__funcionario      = funcionario
         self.__endereco         = endereco
         self.__cpf              = cpf
         self.__cnpj             = cnpj
+        self.__cliente          = cliente
+        self.__fornecedor       = fornecedor
+        self.__funcionario      = funcionario
 
 
-        print("Cliente ", self.__nome, " cadastrado(a) com sucesso!")
+        #print("Cliente ", self.__nome, " cadastrado(a) com sucesso!")
 
     #Getters e Setters
     #CÓDIGO
