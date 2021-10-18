@@ -1,18 +1,27 @@
 {% extends "template.html" %}
 {% block conteudo %}
-<form action="/criar" method="post">
+<form action="/criar_conta_extrato" method="post">
     <fieldset>
         <div class="form-group">
           <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" class="form-control">
         </div>
+         <!--descricao, agencia, numero_conta, saldo_inicial, ativo-->
         <div class="form-group">
-           <label for="categoria">Categoria</label>
-           <input type="text" id="categoria" name="categoria" class="form-control">
+           <label for="descricao">Descricao</label>
+           <input type="text" id="descricao" name="descricao" class="form-control">
         </div>
         <div class="form-group">
-           <label for="console">Console</label>
-           <input type="text" id="console" name="console" class="form-control">
+           <label for="agencia">Agência</label>
+           <input type="text" id="agencia" name="agencia" class="form-control">
+        </div>
+        <div class="form-group">
+           <label for="conta">Conta</label>
+           <input type="text" id="conta" name="conta" class="form-control">
+        </div>
+        <div class="form-group">
+           <label for="saldo_inicial">Saldo Inicial</label>
+           <input type="text" id="saldo_inicial" name="saldo_inicial" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
     </fieldset>
