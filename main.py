@@ -17,8 +17,8 @@ DB = pyodbc.connect('Driver={SQL Server};' +
 conta_extrato_dao   = ContaExtratoDao(DB)
 funcionario_dao     = FuncionarioDao(DB)
 
-funcionario1 = Funcionario(1, "Administrador", False, False, True, " ", " ", " ", "admin", "123", True)
-funcionario2 = Funcionario(2, "Operador", False, False, True, " ", " ", " ", "op", "1234", True)
+funcionario1 = Funcionario("Administrador", False, False, True, " ", " ", " ", "admin", "123", True, 1)
+funcionario2 = Funcionario("Operador", False, False, True, " ", " ", " ", "op", "1234", True, 2)
 
 funcionarios = {funcionario1.login:funcionario1, funcionario2.login:funcionario2}
 
@@ -65,7 +65,7 @@ def criar_funcioario():
     endereco        = request.form['endereco']
     cpf             = request.form['cpf']
     cnpj            = request.form['cnpj']
-    novo_funcionario = Funcionario(nome, False, False, True, endereco, cpf, cnpj, "func", "123", True)
+    novo_funcionario = Funcionario(nome, False, False, True, endereco, cpf, cnpj, nome.split()[0], "123", True)
 
     funcionario_dao.salvar(novo_funcionario)
 
@@ -83,7 +83,7 @@ def login():
 def autenticar():
     if request.form['usuario'] in funcionarios:
         funcionario = funcionarios[request.form['usuario']]
-
+        print("Entrou!!")
         if funcionario.get_senha() == request.form['senha']:
             session['usuario_logado'] = request.form['usuario']
             flash(request.form['usuario'] + ' logou com sucesso!')
