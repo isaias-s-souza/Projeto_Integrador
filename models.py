@@ -120,9 +120,9 @@ class Pessoa:
         self.__ativo = ativo
         
 class Funcionario(Pessoa):
-    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha, ativo):
+    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha, ativo, codigo=None):
         super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo)
-
+        self.__codigo=codigo
         self.__login = login
         self.__senha = senha
 

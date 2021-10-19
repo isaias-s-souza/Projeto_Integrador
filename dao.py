@@ -1,4 +1,3 @@
-import pyodbc
 #https://www.sqlshack.com/performing-crud-operations-with-a-python-sql-library-for-sql-server/
 
 SQL_CRIA_PESSOA =           'INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
@@ -16,7 +15,7 @@ class FuncionarioDao:
         dados_funcionario_Insercao = [  funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
                                         funcionario.get_cnpj(), funcionario.cliente, funcionario.fornecedor,
                                         funcionario.funcionario, funcionario.login, funcionario.get_senha(),
-                                        funcionario.Ativo]
+                                        funcionario.ativo]
 
         if not(funcionario.get_codigo()):
             cursor.execute(SQL_CRIA_PESSOA, dados_funcionario_Insercao)

@@ -5,3 +5,8 @@ Como trabalhar com Modelio para alterar a documentação e enviar a versão mais
   
 Modelo de como conectar no sql server:
 https://gist.github.com/natorsc/5b6f16f2478787af4ef0248243bc1eef
+
+instalar ODBC: 
+	msiexec /i msodbcsql.msi ADDLOCAL=ALL
+depois biblioteca pyodbc:
+	 pip install pyodbc
