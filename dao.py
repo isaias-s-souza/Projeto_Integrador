@@ -50,7 +50,7 @@ class FuncionarioDao:
         self.__db.commit()
         return funcionario
 
-#    def listar(self):
+    def listar(self):
         cursor = self.__db.cursor()
         cursor.execute(SLQ_BUSCA_FUNCIONARIOS)
         funcionarios = traduz_funcionarios(cursor.fetchall())
