@@ -28,8 +28,6 @@ funcionarios = {funcionario1.login:funcionario1, funcionario2.login:funcionario2
 
 @app.route('/')
 def index():
-    lista_conta       = conta_extrato_dao.listar()
-    lista_funcionario = funcionario_dao.listar()
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect('/login?proxima=')
     else:
@@ -37,11 +35,12 @@ def index():
 
 @app.route('/conta_extrato')
 def conta_extrato():
+    lista = conta_extrato_dao.listar()
+
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect('/login?proxima=')
     else:
-        return render_template('conta_extrato.html')
-
+        return render_template('conta_extrato.html', contas=lista)
 
 @app.route('/criar_conta_extrato', methods = ['POST', ])
 def criar_conta_extrato():
