@@ -24,6 +24,8 @@ funcionarios = {funcionario1.login:funcionario1, funcionario2.login:funcionario2
 
 @app.route('/')
 def index():
+    lista_conta       = conta_extrato_dao.listar()
+    lista_funcionario = funcionario_dao.listar()
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect('/login?proxima=')
     else:
