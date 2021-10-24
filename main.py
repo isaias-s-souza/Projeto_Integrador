@@ -1,4 +1,5 @@
 import pyodbc
+import configparser
 from flask import Flask, render_template, request, redirect, session, flash
 
 from dao import ContaExtratoDao, FuncionarioDao
@@ -7,8 +8,11 @@ from models import Funcionario, ContaExtrato
 app = Flask(__name__)
 app.secret_key = 'SISTEMAFINANCEIRO'
 
+config = configparser.ConfigParser()
+config.read('CONFIGURACAO.ini')
+
 DB = pyodbc.connect('Driver={SQL Server};' +
-                      'Server=DESKTOP-RRJIH9Q\SIS_FIN;' +
+                      'Server=' + config['CONFIGURACAO_GERAL']['DATABASE'] + ';' +
                       'Database=SISTEMA_FINANCEIRO;' +
                       'UID=sa;' +
                       'PWD=2021financesys;' +
