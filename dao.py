@@ -53,7 +53,7 @@ class FuncionarioDao:
         cursor = self.__db.cursor()
         cursor.execute(SLQ_BUSCA_FUNCIONARIOS)
         funcionarios = traduz_funcionarios(cursor.fetchall())
-        return  funcionarios
+        return funcionarios
 
 def traduz_funcionarios(funcionarios):
     def cria_funcionario_com_tupla(tupla):
