@@ -1,15 +1,16 @@
 #https://www.sqlshack.com/performing-crud-operations-with-a-python-sql-library-for-sql-server/
 from models import Funcionario, ContaExtrato
 
-SQL_CRIA_PESSOA =           'INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-                            'SENHA, ATIVO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-SQL_CRIA_CONTA_EXTRATO  =   'INSERT INTO CONTA_EXTRATO(NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO)' \
-                            'VALUES(?, ?, ?, ?, ?, ?)'
-SLQ_BUSCA_FUNCIONARIOS  =   'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-                            'SENHA, ATIVO FROM PESSOA'
-SQL_BUSCA_CONTAS        =   "SELECT COD, NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, " \
-                            "IIF(ATIVO = 1, 'Ativo', 'Desativado') as ATIVO FROM CONTA_EXTRATO"
-
+SQL_CRIA_PESSOA                 =    'INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
+                                'SENHA, ATIVO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+SQL_CRIA_CONTA_EXTRATO          =   'INSERT INTO CONTA_EXTRATO(NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO)' \
+                                'VALUES(?, ?, ?, ?, ?, ?)'
+SLQ_BUSCA_FUNCIONARIOS          =   'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
+                                'SENHA, ATIVO FROM PESSOA'
+SQL_BUSCA_CONTAS                =   "SELECT COD, NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, " \
+                                "IIF(ATIVO = 1, 'Ativo', 'Desativado') as ATIVO FROM CONTA_EXTRATO"
+SLQ_BUSCA_FUNCIONARIOS_POR_ID  =   'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
+                                'SENHA, ATIVO FROM PESSOA'
 
 class ContaExtratoDao:
     def __init__(self, db):
@@ -49,7 +50,7 @@ class FuncionarioDao:
         self.__db.commit()
         return funcionario
 
-#    def listar(self):
+    def listar(self):
         cursor = self.__db.cursor()
         cursor.execute(SLQ_BUSCA_FUNCIONARIOS)
         funcionarios = traduz_funcionarios(cursor.fetchall())
