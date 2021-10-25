@@ -54,7 +54,7 @@ class FuncionarioDao:
         cursor = self.__db.cursor()
         cursor.execute(SLQ_BUSCA_FUNCIONARIOS)
         funcionarios = traduz_funcionarios(cursor.fetchall())
-        return  funcionarios
+        return funcionarios
 
     def busca_por_id(self, cod):
         cursor = self.__db.cursor()
