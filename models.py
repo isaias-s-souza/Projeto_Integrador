@@ -120,7 +120,7 @@ class Pessoa:
     @ativo.setter
     def funcionario(self, ativo):
         self.__ativo = ativo
-        
+
 class Funcionario(Pessoa):
     #(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo,
     # telefone, celular, email, datacadastro)
