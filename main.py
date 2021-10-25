@@ -75,7 +75,7 @@ def criar_funcioario():
     login           = request.form['login']
     novo_funcionario = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
                                    cpf=cpf, cnpj=cnpj, login=login, ativo=True, telefone='', celular='', email='',
-                                   razaosocial='', datacadastro='')
+                                   datacadastro='')
 
     funcionario_dao.salvar(novo_funcionario)
     lista = funcionario_dao.listar()

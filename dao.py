@@ -8,9 +8,9 @@ SQL_BUSCA_CONTAS                   =   "SELECT COD, NOME, DESCRICAO, AGENCIA, NU
                                     "IIF(ATIVO = 1, 'Ativo', 'Desativado') as ATIVO FROM CONTA_EXTRATO "
 
 SQL_CRIA_PESSOA_FUNCIONARIO       =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, " \
-                                    "SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
+                                    "SENHA, ATIVO, TELEFONE, CELULAR, EMAIL) " \
                                     "VALUES(?, ?, ?, ?, " \
-                                    " ?, ?, ?, ?, '123', ?, '', ?, ?, ?)"
+                                    " ?, ?, ?, ?, '123', ?, ?, ?, ?)"
 
 SQL_CRIA_PESSOA_FORNECEDOR        =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, " \
                                     "SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
@@ -29,7 +29,7 @@ SLQ_BUSCA_FORNECEDOR          =     'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIE
 
 SLQ_BUSCA_FUNCIONARIO_LOGIN     =  'SELECT COD, LOGIN, SENHA ' \
                                     'FROM PESSOA ' \
-                                    'WHERE ATIVO = 1 '
+                                    'WHERE ATIVO = 1 and LOGIN = ?'
 
 class ContaExtratoDao:
     def __init__(self, db):
@@ -63,10 +63,10 @@ class FuncionarioDao:
         cursor = self.__db.cursor()
         #"INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, " \
         #"SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
-        dados_funcionario_Insercao = [  funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
+        dados_funcionario_Insercao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
                                 funcionario.get_cnpj(), funcionario.cliente, funcionario.fornecedor,
                                 funcionario.funcionario, funcionario.login, funcionario.ativo,
-                                funcionario.razaosocial, funcionario.telefone, funcionario.celular, funcionario.email]
+                                funcionario.telefone, funcionario.celular, funcionario.email]
 
         if not(funcionario.get_codigo()):
             cursor.execute(SQL_CRIA_PESSOA_FUNCIONARIO, dados_funcionario_Insercao)
@@ -79,16 +79,16 @@ class FuncionarioDao:
         funcionarios = traduz_funcionarios(cursor.fetchall())
         return funcionarios
 
-    def busca_por_id(self,cod):
+    def busca_por_id(self, login):
         cursor = self.__db.cursor()
-        cursor.execute(SLQ_BUSCA_FUNCIONARIO_LOGIN)
+        cursor.execute(SLQ_BUSCA_FUNCIONARIO_LOGIN, login)
         tupla = cursor.fetchone()
 
         # (self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, ativo, telefone,
         #         celular, email, datacadastro, razaosocial, codigo=None, senha='')
         return Funcionario(codigo=tupla[0], login=tupla[1], senha=tupla[2], nome='', cliente='',
                            fornecedor=False, funcionario=True, endereco='', cpf='', cnpj='',
-                           ativo=True, telefone='', celular='', email='', datacadastro='', razaosocial='')
+                           ativo=True, telefone='', celular='', email='', datacadastro='')
 
 
 
@@ -104,7 +104,7 @@ def traduz_funcionarios(funcionarios):
         return Funcionario(nome=tupla[1], cliente=tupla[5], fornecedor=tupla[6], funcionario=tupla[7],
                            endereco=tupla[2], cpf=tupla[3], cnpj=tupla[4], login=tupla[8], ativo=tupla[10],
                            telefone=tupla[12], celular=tupla[13], email=tupla[14], datacadastro=tupla[15],
-                           razaosocial=tupla[11], codigo=tupla[0])
+                           codigo=tupla[0])
 
     return list(map(cria_funcionario_com_tupla, funcionarios))
 
