@@ -1,6 +1,7 @@
 class Pessoa:
     #Metódo construtor
-    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo):
+    def __init__(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo,
+                 telefone, celular, email, datacadastro):
 
         #Atributos Privados
         self.__codigo           = codigo
@@ -8,11 +9,14 @@ class Pessoa:
         self.__endereco         = endereco
         self.__cpf              = cpf
         self.__cnpj             = cnpj
+        self.__telefone         = telefone
+        self.__celular          = celular
+        self.__email            = email
+        self.__datacadastro     = datacadastro
         self.__cliente          = cliente
         self.__fornecedor       = fornecedor
         self.__funcionario      = funcionario
         self.__ativo            = ativo
-
 
         #print("Cliente ", self.__nome, " cadastrado(a) com sucesso!")
 
@@ -60,32 +64,20 @@ class Pessoa:
     def set_cpf(self, cnpj):
         self.__cnpj = cnpj
 
-    #Métodos da Entidade
-    def imprime_dados_pessoa(self):
-        print("-----------DADOS ENTIDADE-----------")
-        print("Código     ----- {}".format(self.__codigo))
-        print("Nome       ----- {}".format(self.__nome))
-        print("Endereço   ----- {}".format( self.__endereco))
-
-        print("\nTipo Entidade:")
-        if self.__cliente == True:
-            print("Cliente [X]")
-        else:
-            print("Cliente [ ]")
-
-        if self.__fornecedor == True:
-            print("Fornecedor [X]")
-        else:
-            print("Fornecedor [ ]")
-
-        if self.__funcionario == True:
-            print("Funcionário [X]")
-        else:
-            print("Funcionário [ ]")
-
-        print("\n")
-
     #Definição de atributos da classe como propriedade
+
+    @property
+    def telefone(self):
+        return self.__telefone
+    @property
+    def celular(self):
+        return self.__celular
+    @property
+    def email(self):
+        return self.__email
+    @property
+    def datacadastro(self):
+        return self.__datacadastro
     @property
     def cliente(self):
         return self.__cliente
@@ -103,37 +95,58 @@ class Pessoa:
         return self.__ativo
 
     #Setters
+    @telefone.setter
+    def telefone(self, telefone):
+        self.__telefone = telefone
+    @celular.setter
+    def celular(self, celular):
+        self.__celular = celular
+    @email.setter
+    def email(self, email):
+        self.__email = email
+    @datacadastro.setter
+    def funcionario(self, datacadastro):
+        self.__datacadastro = datacadastro
+
     @cliente.setter
     def cliente(self, cliente):
         self.__cliente = cliente
-
     @fornecedor.setter
     def fornecedor(self, fornecedor):
         self.__fornecedor = fornecedor
-
     @funcionario.setter
     def funcionario(self, funcionario):
         self.__funcionario = funcionario
-
     @ativo.setter
     def funcionario(self, ativo):
         self.__ativo = ativo
         
 class Funcionario(Pessoa):
-    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha, ativo, codigo=None):
-        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo)
+    #(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo,
+    # telefone, celular, email, datacadastro)
+    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha, ativo, telefone,
+                 celular, email, datacadastro, razaosocial, codigo=None):
+        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone, celular,
+                         email, datacadastro)
         self.__codigo=codigo
-        self.__login = login
-        self.__senha = senha
+        self.__login       = login
+        self.__senha       = senha
+        self.__razaosocial = razaosocial
 
     #Propriedades
     @property
     def login(self):
         return self.__login
+    @property
+    def razaosocial(self):
+        return self.__razaosocial
 
     @login.setter
     def login(self, login):
         self.__login = login
+    @razaosocial.setter
+    def razaosocial(self, razaosocial):
+        self.__razaosocial = razaosocial
 
     # Métodos Getter's e Setters
     def get_senha(self):
