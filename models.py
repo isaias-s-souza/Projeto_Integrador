@@ -118,7 +118,7 @@ class Pessoa:
     @ativo.setter
     def funcionario(self, ativo):
         self.__ativo = ativo
-        
+
 class Funcionario(Pessoa):
     def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha, ativo, codigo=None):
         super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo)

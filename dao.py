@@ -2,15 +2,15 @@
 from models import Funcionario, ContaExtrato
 
 SQL_CRIA_PESSOA                 =    'INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-                                'SENHA, ATIVO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+                                'SENHA, ATIVO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, "123", ?)'
 SQL_CRIA_CONTA_EXTRATO          =   'INSERT INTO CONTA_EXTRATO(NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO)' \
                                 'VALUES(?, ?, ?, ?, ?, ?)'
 SLQ_BUSCA_FUNCIONARIOS          =   'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-                                'SENHA, ATIVO FROM PESSOA'
+                                'SENHA, ATIVO FROM PESSOA ORDER BY COD'
 SQL_BUSCA_CONTAS                =   "SELECT COD, NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, " \
-                                "IIF(ATIVO = 1, 'Ativo', 'Desativado') as ATIVO FROM CONTA_EXTRATO"
-SLQ_BUSCA_FUNCIONARIOS_POR_ID  =   'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-                                'SENHA, ATIVO FROM PESSOA'
+                                "IIF(ATIVO = 1, 'Ativo', 'Desativado') as ATIVO FROM CONTA_EXTRATO "                           "ORDER BY COD"
+SLQ_BUSCA_FUNCIONARIOS_POR_ID  =  'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
+                                'SENHA, ATIVO FROM PESSOA WHERE COD=%s'
 
 class ContaExtratoDao:
     def __init__(self, db):
@@ -56,17 +56,26 @@ class FuncionarioDao:
         funcionarios = traduz_funcionarios(cursor.fetchall())
         return  funcionarios
 
+    def busca_por_id(self, cod):
+        cursor = self.__db.cursor()
+        cursor.execute((SLQ_BUSCA_FUNCIONARIOS_POR_ID), (cod, ))
+        tupla = cursor.fetcone()
+
+        return Funcionario(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6],
+                           tupla[7], tupla[8], tupla[9], tupla[10], codigo=tupla[0])
+
+
 def traduz_funcionarios(funcionarios):
     def cria_funcionario_com_tupla(tupla):
         return Funcionario(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6],
-                           tupla[7], tupla[8], tupla[9], tupla[10], codigo= tupla[0])
-    return list(map(cria_funcionario_com_tupla,funcionarios))
+                           tupla[7], tupla[8], tupla[9], tupla[10], codigo=tupla[0])
+
+    return list(map(cria_funcionario_com_tupla, funcionarios))
 
 def traduz_contas(contas):
     def cria_conta_com_tupla(tupla):
-    # nome, descricao, agencia, numero_conta, saldo_inicial, ativo, codigo = None
         return ContaExtrato(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], codigo=tupla[0])
-    return list(map(cria_conta_com_tupla,contas))
+    return list(map(cria_conta_com_tupla, contas))
 
 
 

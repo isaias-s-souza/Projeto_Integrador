@@ -21,10 +21,10 @@ DB = pyodbc.connect('Driver={SQL Server};' +
 conta_extrato_dao   = ContaExtratoDao(DB)
 funcionario_dao     = FuncionarioDao(DB)
 
-funcionario1 = Funcionario("Administrador", False, False, True, " ", " ", " ", "admin", "123", True, 1)
-funcionario2 = Funcionario("Operador", False, False, True, " ", " ", " ", "op", "1234", True, 2)
+#funcionario1 = Funcionario("Administrador", False, False, True, " ", " ", " ", "admin", "123", True, 1)
+#funcionario2 = Funcionario("Operador", False, False, True, " ", " ", " ", "op", "1234", True, 2)
 
-funcionarios = {funcionario1.login:funcionario1, funcionario2.login:funcionario2}
+#funcionarios = {funcionario1.login:funcionario1, funcionario2.login:funcionario2}
 
 @app.route('/')
 def index():
@@ -53,15 +53,17 @@ def criar_conta_extrato():
     nova_conta_extrato = ContaExtrato(nome, descricao, agencia, conta, saldo_inicial, True)
 
     conta_extrato_dao.salvar(nova_conta_extrato)
+    lista = conta_extrato_dao.listar()
 
-    return redirect('/')
+    return render_template('conta_extrato.html', contas=lista)
 
 @app.route('/funcionario')
 def funcionario():
+    lista = funcionario_dao.listar()
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect('/login?proxima=')
     else:
-        return render_template('funcionario.html')
+        return render_template('funcionario.html', funcionarios=lista)
 
 
 @app.route('/criar_funcionario', methods = ['POST', ])
@@ -70,11 +72,14 @@ def criar_funcioario():
     endereco        = request.form['endereco']
     cpf             = request.form['cpf']
     cnpj            = request.form['cnpj']
-    novo_funcionario = Funcionario(nome, False, False, True, endereco, cpf, cnpj, nome.split()[0], "123", True)
+    login           = request.form['login']
+    ativo           = request.form['ativo']
+    # nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha, ativo, codigo=None
+    novo_funcionario = Funcionario(nome, False, False, True, endereco, cpf, cnpj, login, " ", ativo)
 
     funcionario_dao.salvar(novo_funcionario)
-
-    return redirect('/')
+    lista = funcionario_dao.listar()
+    return render_template('funcionario.html', funcionarios=lista)
 
 @app.route('/login')
 def login():
