@@ -124,29 +124,21 @@ class Pessoa:
 class Funcionario(Pessoa):
     #(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo,
     # telefone, celular, email, datacadastro)
-    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, ativo, telefone,
-                 celular, email, datacadastro, razaosocial, codigo=None, senha=''):
+    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj,  ativo, telefone,
+                 celular, email, datacadastro, razaosocial, codigo=None):
         super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone, celular,
                          email, datacadastro)
         self.__codigo=codigo
-        self.__login       = login
-        self.__senha       = senha
         self.__razaosocial = razaosocial
 
     #Propriedades
     @property
     def login(self):
         return self.__login
-    @property
-    def razaosocial(self):
-        return self.__razaosocial
 
     @login.setter
     def login(self, login):
         self.__login = login
-    @razaosocial.setter
-    def razaosocial(self, razaosocial):
-        self.__razaosocial = razaosocial
 
     # Métodos Getter's e Setters
     def get_senha(self):
@@ -154,6 +146,28 @@ class Funcionario(Pessoa):
 
     def set_senha(self, senha):
         self.__senha = senha
+
+class Fornecedor(Pessoa):
+    #(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo,
+    # telefone, celular, email, datacadastro)
+    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, ativo, telefone,
+                 celular, email, datacadastro, razaosocial, codigo=None, senha=''):
+        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone, celular,
+                         email, datacadastro)
+        self.__codigo=codigo
+        self.__login = login
+        self.__senha = senha
+        self.__razaosocial = razaosocial
+
+    #Propriedades
+    @property
+    def razaosocial(self):
+        return self.__razaosocial
+    @razaosocial.setter
+    def razaosocial(self, razaosocial):
+        self.__razaosocial = razaosocial
+
+
 
 class ContaExtrato:
     def __init__(self, nome, descricao, agencia, numero_conta, saldo_inicial, ativo, codigo = None):

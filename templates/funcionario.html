@@ -1,7 +1,7 @@
 {% extends "template.html" %}
 {% block conteudo %}
             <form action="/criar_funcionario" method="post">
-                <h1>Cadastro de Funcionários</h1>
+                <center><h1>Cadastro de Funcionário</h1></center>
                 <fieldset>
                     <div class="form-group">
                       <label for="nome">Nome</label>
@@ -23,6 +23,7 @@
                        <label for="login">Login</label>
                        <input type="text" id="login" name="login" class="form-control">
                     </div>
+                    </br>
                     <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
                 </fieldset>
             </form>
