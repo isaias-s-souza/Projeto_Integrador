@@ -73,9 +73,9 @@ def criar_funcioario():
     cpf             = request.form['cpf']
     cnpj            = request.form['cnpj']
     login           = request.form['login']
-    ativo           = request.form['ativo']
-    # nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, senha, ativo, codigo=None
-    novo_funcionario = Funcionario(nome, False, False, True, endereco, cpf, cnpj, login, " ", ativo)
+    novo_funcionario = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
+                                   cpf=cpf, cnpj=cnpj, login=login, ativo=True, telefone='', celular='', email='',
+                                   razaosocial='', datacadastro='')
 
     funcionario_dao.salvar(novo_funcionario)
     lista = funcionario_dao.listar()
@@ -89,13 +89,14 @@ def login():
 
     return render_template('login.html', proxima = proxima)
 
-@app.route('/autenticar', methods =['POST', ])
+@app.route('/autenticar', methods = ['POST', ])
 def autenticar():
-    if request.form['usuario'] in funcionarios:
-        funcionario = funcionarios[request.form['usuario']]
-        print("Entrou!!")
+    funcionario = funcionario_dao.busca_por_id(request.form['usuario'])
+
+    if funcionario:
         if funcionario.get_senha() == request.form['senha']:
             session['usuario_logado'] = request.form['usuario']
+            session['codigo_logado']  = funcionario.get_codigo()
             flash(request.form['usuario'] + ' logou com sucesso!')
             proxima_pagina = request.form['proxima']
 
