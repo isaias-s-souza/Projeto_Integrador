@@ -99,7 +99,7 @@ def criar_fornecedor():
     #self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
     #celular, email, datacadastro, razaosocial, codigo=None
     novo_fornecedor = Fornecedor(nome=nome, cliente=False, fornecedor=True, funcionario=False,
-                                 endereco=endereco, cpf=cpf, cnpj=cnpj,ativo=True, telefone='',
+                                 endereco=endereco, cpf=cpf, cnpj=cnpj, ativo=True, telefone='',
                                  celular='', email='', datacadastro='',razaosocial=razaosocial)
 
     fornecedor_dao.salvar(novo_fornecedor)

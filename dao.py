@@ -1,34 +1,4 @@
-#https://www.sqlshack.com/performing-crud-operations-with-a-python-sql-library-for-sql-server/
 from models import Funcionario, ContaExtrato, Fornecedor
-
-SQL_CRIA_CONTA_EXTRATO          =   'INSERT INTO CONTA_EXTRATO(NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO)' \
-                                    'VALUES(?, ?, ?, ?, ?, ?)'
-
-SQL_BUSCA_CONTAS                   =   "SELECT COD, NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, " \
-                                    "IIF(ATIVO = 1, 'Ativo', 'Desativado') as ATIVO FROM CONTA_EXTRATO "
-
-SQL_CRIA_PESSOA_FUNCIONARIO       =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, " \
-                                    "SENHA, ATIVO, TELEFONE, CELULAR, EMAIL) " \
-                                    "VALUES(?, ?, ?, ?, " \
-                                    " ?, ?, ?, ?, '123', ?, ?, ?, ?)"
-
-SQL_CRIA_PESSOA_FORNECEDOR        =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, " \
-                                    "ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
-                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-
-SLQ_BUSCA_FUNCIONARIO          =   'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-                                    'SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
-                                    'FROM PESSOA ' \
-                                    'WHERE FUNCIONARIO = 1 ORDER BY COD'
-
-SLQ_BUSCA_FORNECEDOR          =     'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, ' \
-                                    'ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO '\
-                                    'FROM PESSOA ' \
-                                    'WHERE FORNECEDOR = 1 ORDER BY COD'
-
-SLQ_BUSCA_FUNCIONARIO_LOGIN     =  'SELECT COD, LOGIN, SENHA ' \
-                                    'FROM PESSOA ' \
-                                    'WHERE ATIVO = 1 and LOGIN = ?'
 
 class ContaExtratoDao:
     def __init__(self, db):
@@ -36,15 +6,22 @@ class ContaExtratoDao:
 
     def salvar(self, conta_extrato):
         cursor = self.__db.cursor()
-        dados_conta_extrato_insercao = [conta_extrato.get_nome(), conta_extrato.get_descricao(), conta_extrato.agencia,
-                                        conta_extrato.get_numero_conta(), conta_extrato.saldo_inicial, conta_extrato.ativo]
+
         if not(conta_extrato.get_codigo()):
+            dados_conta_extrato_insercao = [conta_extrato.get_nome(), conta_extrato.get_descricao(),
+                                            conta_extrato.agencia,
+                                            conta_extrato.get_numero_conta(), conta_extrato.saldo_inicial,
+                                            conta_extrato.ativo]
+            SQL_CRIA_CONTA_EXTRATO = 'INSERT INTO CONTA_EXTRATO(NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO)' \
+                                     'VALUES(?, ?, ?, ?, ?, ?)'
             cursor.execute(SQL_CRIA_CONTA_EXTRATO, dados_conta_extrato_insercao)
         self.__db.commit()
         return conta_extrato
 
     def listar(self):
             cursor = self.__db.cursor()
+            SQL_BUSCA_CONTAS = "SELECT COD, NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, " \
+                               "IIF(ATIVO = 1, 'Ativo', 'Desativado') as ATIVO FROM CONTA_EXTRATO "
             cursor.execute(SQL_BUSCA_CONTAS)
             contas = traduz_contas(cursor.fetchall())
             return contas
@@ -60,27 +37,36 @@ class FuncionarioDao:
 
     def salvar(self, funcionario):
         cursor = self.__db.cursor()
-        #"INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, " \
-        #"SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
-        dados_funcionario_Insercao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
-                                funcionario.get_cnpj(), funcionario.cliente, funcionario.fornecedor,
-                                funcionario.funcionario, funcionario.login, funcionario.ativo,
-                                funcionario.telefone, funcionario.celular, funcionario.email]
 
         if not(funcionario.get_codigo()):
+            dados_funcionario_Insercao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
+                                          funcionario.get_cnpj(), funcionario.cliente, funcionario.fornecedor,
+                                          funcionario.funcionario, funcionario.login, funcionario.ativo,
+                                          funcionario.telefone, funcionario.celular, funcionario.email]
+            SQL_CRIA_PESSOA_FUNCIONARIO = "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, " \
+                                          "SENHA, ATIVO, TELEFONE, CELULAR, EMAIL) " \
+                                          "VALUES(?, ?, ?, ?, " \
+                                          " ?, ?, ?, ?, '123', ?, ?, ?, ?)"
             cursor.execute(SQL_CRIA_PESSOA_FUNCIONARIO, dados_funcionario_Insercao)
         self.__db.commit()
         return funcionario
 
     def listar(self):
         cursor = self.__db.cursor()
-        cursor.execute(SLQ_BUSCA_FUNCIONARIO)
+        SQL_BUSCA_FUNCIONARIO = 'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
+                                'SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
+                                'FROM PESSOA ' \
+                                'WHERE FUNCIONARIO = 1 ORDER BY COD'
+        cursor.execute(SQL_BUSCA_FUNCIONARIO)
         funcionarios = traduz_funcionarios(cursor.fetchall())
         return funcionarios
 
     def busca_por_id(self, login):
         cursor = self.__db.cursor()
-        cursor.execute(SLQ_BUSCA_FUNCIONARIO_LOGIN, login)
+        SQL_BUSCA_FUNCIONARIO_LOGIN = 'SELECT COD, LOGIN, SENHA ' \
+                                      'FROM PESSOA ' \
+                                      'WHERE ATIVO = 1 and LOGIN = ?'
+        cursor.execute(SQL_BUSCA_FUNCIONARIO_LOGIN, login)
         tupla = cursor.fetchone()
 
         # (self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, ativo, telefone,
@@ -113,8 +99,9 @@ class FornecedorDao:
 
     def salvar(self, fornecedor):
         cursor = self.__db.cursor()
-        #"INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO,  " \
-        #" ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
+        SQL_CRIA_PESSOA_FORNECEDOR  =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, " \
+                                        "ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
+                                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         dados_fornecedor_Insercao = [fornecedor.get_nome(), fornecedor.get_endereco(), fornecedor.get_cpf(),
                                 fornecedor.get_cnpj(), fornecedor.cliente, fornecedor.fornecedor,
                                 fornecedor.funcionario, fornecedor.ativo, fornecedor.razaosocial,
@@ -126,8 +113,13 @@ class FornecedorDao:
         return fornecedor
 
     def listar(self):
+        SQL_BUSCA_FORNECEDOR = 'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, ' \
+                               'ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
+                               'FROM PESSOA ' \
+                               'WHERE FORNECEDOR = 1 ' \
+                               'ORDER BY COD'
         cursor = self.__db.cursor()
-        cursor.execute(SLQ_BUSCA_FORNECEDOR)
+        cursor.execute(SQL_BUSCA_FORNECEDOR)
         fornecedor = traduz_fornecedor(cursor.fetchall())
         return fornecedor
 
@@ -144,7 +136,7 @@ def traduz_fornecedor(fornecedor):
         return Fornecedor(nome=tupla[1], cliente=tupla[5], fornecedor=tupla[6], funcionario=tupla[7],
                            endereco=tupla[2], cpf=tupla[3], cnpj=tupla[4], ativo=tupla[8],
                            telefone=tupla[10], celular=tupla[11], email=tupla[12], datacadastro=tupla[13],
-                           razaosocial=tupla[9],codigo=tupla[0])
+                           razaosocial=tupla[9], codigo=tupla[0])
 
     return list(map(cria_fornecedor_com_tupla, fornecedor))
 
