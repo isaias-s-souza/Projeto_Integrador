@@ -151,7 +151,7 @@ class Funcionario(Pessoa):
 class Fornecedor(Pessoa):
     #(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo,
     # telefone, celular, email, datacadastro)
-    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, ativo, telefone,
+    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
                  celular, email, datacadastro, razaosocial, codigo=None):
         super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone, celular,
                          email, datacadastro)

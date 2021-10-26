@@ -2,8 +2,8 @@ import pyodbc
 import configparser
 from flask import Flask, render_template, request, redirect, session, flash
 
-from dao import ContaExtratoDao, FuncionarioDao
-from models import Funcionario, ContaExtrato
+from dao import ContaExtratoDao, FuncionarioDao, FornecedorDao
+from models import Funcionario, ContaExtrato, Fornecedor
 
 app = Flask(__name__)
 app.secret_key = 'SISTEMAFINANCEIRO'
@@ -20,11 +20,9 @@ DB = pyodbc.connect('Driver={SQL Server};' +
 
 conta_extrato_dao   = ContaExtratoDao(DB)
 funcionario_dao     = FuncionarioDao(DB)
+fornecedor_dao      = FornecedorDao(DB)
 
-#funcionario1 = Funcionario("Administrador", False, False, True, " ", " ", " ", "admin", "123", True, 1)
-#funcionario2 = Funcionario("Operador", False, False, True, " ", " ", " ", "op", "1234", True, 2)
 
-#funcionarios = {funcionario1.login:funcionario1, funcionario2.login:funcionario2}
 
 @app.route('/')
 def index():
@@ -81,6 +79,33 @@ def criar_funcioario():
     lista = funcionario_dao.listar()
     return render_template('funcionario.html', funcionarios=lista)
 
+
+@app.route('/fornecedor')
+def fornecedor():
+    lista = fornecedor_dao.listar()
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect('/login?proxima=')
+    else:
+        return render_template('fornecedor.html', fornecedores=lista)
+
+
+@app.route('/criar_fornecedor', methods=['POST', ])
+def criar_fornecedor():
+    nome            = request.form['nome']
+    razaosocial     = request.form['razaosocial']
+    endereco        = request.form['endereco']
+    cpf             = request.form['cpf']
+    cnpj            = request.form['cnpj']
+    #self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
+    #celular, email, datacadastro, razaosocial, codigo=None
+    novo_fornecedor = Fornecedor(nome=nome, cliente=False, fornecedor=True, funcionario=False,
+                                 endereco=endereco, cpf=cpf, cnpj=cnpj,ativo=True, telefone='',
+                                 celular='', email='', datacadastro='',razaosocial=razaosocial)
+
+    fornecedor_dao.salvar(novo_fornecedor)
+    lista = fornecedor_dao.listar()
+    return render_template('fornecedor.html', fornecedores=lista)
+
 @app.route('/login')
 def login():
     proxima = request.args.get('proxima')
@@ -113,7 +138,6 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug = True)
-
 
 
 

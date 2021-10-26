@@ -12,20 +12,19 @@ SQL_CRIA_PESSOA_FUNCIONARIO       =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, C
                                     "VALUES(?, ?, ?, ?, " \
                                     " ?, ?, ?, ?, '123', ?, ?, ?, ?)"
 
-SQL_CRIA_PESSOA_FORNECEDOR        =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, " \
-                                    "SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
-                                    "VALUES(?, ?, ?, ?, " \
-                                    " ?, ?, ?, '', '', ?, ?, ?, ?, ?)"
+SQL_CRIA_PESSOA_FORNECEDOR        =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, " \
+                                    "ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
 SLQ_BUSCA_FUNCIONARIO          =   'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
                                     'SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
                                     'FROM PESSOA ' \
-                                    'ORDER BY COD'
+                                    'WHERE FUNCIONARIO = 1 ORDER BY COD'
 
 SLQ_BUSCA_FORNECEDOR          =     'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, ' \
-                                    'ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
+                                    'ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO '\
                                     'FROM PESSOA ' \
-                                    'ORDER BY COD'
+                                    'WHERE FORNECEDOR = 1 ORDER BY COD'
 
 SLQ_BUSCA_FUNCIONARIO_LOGIN     =  'SELECT COD, LOGIN, SENHA ' \
                                     'FROM PESSOA ' \
@@ -86,7 +85,7 @@ class FuncionarioDao:
 
         # (self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, ativo, telefone,
         #         celular, email, datacadastro, razaosocial, codigo=None, senha='')
-        return Funcionario(codigo=tupla[0], login=tupla[1], senha=tupla[2], nome='', cliente='',
+        return Funcionario(codigo=tupla[0], login=tupla[1], senha=tupla[2], nome='', cliente=False,
                            fornecedor=False, funcionario=True, endereco='', cpf='', cnpj='',
                            ativo=True, telefone='', celular='', email='', datacadastro='')
 
@@ -118,8 +117,8 @@ class FornecedorDao:
         #" ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
         dados_fornecedor_Insercao = [fornecedor.get_nome(), fornecedor.get_endereco(), fornecedor.get_cpf(),
                                 fornecedor.get_cnpj(), fornecedor.cliente, fornecedor.fornecedor,
-                                fornecedor.funcionario, fornecedor.login, fornecedor.ativo,
-                                fornecedor.razaosocial, fornecedor.telefone, fornecedor.celular, fornecedor.email]
+                                fornecedor.funcionario, fornecedor.ativo, fornecedor.razaosocial,
+                                fornecedor.telefone, fornecedor.celular, fornecedor.email]
 
         if not(fornecedor.get_codigo()):
             cursor.execute(SQL_CRIA_PESSOA_FORNECEDOR, dados_fornecedor_Insercao)
@@ -135,20 +134,19 @@ class FornecedorDao:
 
 def traduz_fornecedor(fornecedor):
     def cria_fornecedor_com_tupla(tupla):
-        #         0    1       2       3    4      5           6           7         8
-        #'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-        #   9      10        11         12        13      14          15
-        #'SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
+        # 0    1        2       3   4       5       6           7
+        #COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, ' \
+        #  8        9           10          11      12      13
+        #ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO
 
-        #nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj,  ativo, telefone,
-        #         celular, email, datacadastro, razaosocial, codigo=None
+        # self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
+        # celular, email, datacadastro, razaosocial, codigo=None
         return Fornecedor(nome=tupla[1], cliente=tupla[5], fornecedor=tupla[6], funcionario=tupla[7],
-                           endereco=tupla[2], cpf=tupla[3], cnpj=tupla[4], ativo=tupla[10],
-                           telefone=tupla[12], celular=tupla[13], email=tupla[14], datacadastro=tupla[15],
-                           razaosocial=tupla[11],  codigo=tupla[0] )
+                           endereco=tupla[2], cpf=tupla[3], cnpj=tupla[4], ativo=tupla[8],
+                           telefone=tupla[10], celular=tupla[11], email=tupla[12], datacadastro=tupla[13],
+                           razaosocial=tupla[9],codigo=tupla[0])
 
     return list(map(cria_fornecedor_com_tupla, fornecedor))
-
 
 
 
