@@ -41,28 +41,31 @@
                     </div>
                 </div>
             </nav>
-            <form action="/criar_funcionario" method="post">
+            <form action="/criar_funcionario"  method="post">
                 <center><h1>Cadastro de Funcionário</h1></center>
                 <fieldset>
                     <div class="form-group">
                       <label for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" class="form-control">
+                        <input type="text" id="nome" name="nome" class="form-control"
+                               value="{{funcionario.get_nome()}}">
                     </div>
                     <div class="form-group">
                        <label for="endereco">Endereço</label>
-                       <input type="text" id="endereco" name="endereco" class="form-control">
+                       <input type="text" id="endereco" name="endereco" class="form-control"
+                              value="{{funcionario.get_endereco()}}">
                     </div>
                     <div class="form-group">
                        <label for="cpf">CPF</label>
-                       <input type="text" id="cpf" name="cpf" class="form-control">
+                       <input type="text" id="cpf" name="cpf" class="form-control" value="{{funcionario.get_cpf()}}">
                     </div>
                     <div class="form-group">
                        <label for="cnpj">CNPJ</label>
-                       <input type="text" id="cnpj" name="cnpj" class="form-control">
+                       <input type="text" id="cnpj" name="cnpj" class="form-control" value="{{funcionario.get_cnpj()}}">
                     </div>
                     <div class="form-group">
                        <label for="login">Login</label>
-                       <input type="text" id="login" name="login" class="form-control">
+                       <input type="text" id="login" name="login" class="form-control"
+                              value="{{funcionario.login}}">
                     </div>
                     </br>
                     <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
@@ -78,7 +81,6 @@
                         <th>CPF</th>
                         <th>CNPJ</th>
                         <th>Login</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -90,6 +92,7 @@
                         <td>{{funcionario.get_cpf()}}</td>
                         <td>{{funcionario.get_cnpj()}}</td>
                         <td>{{funcionario.login}}</td>
+                        <td><a href="{{url_for('editar', cod = funcionario.get_cod())}}">Editar</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -106,6 +106,16 @@ def criar_fornecedor():
     lista = fornecedor_dao.listar()
     return render_template('fornecedor.html', fornecedores=lista)
 
+@app.route('/editar/<int:cod>')
+def editar(cod):
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect('/login?proxima=editar')
+    funcionario = funcionario_dao.busca_por_id()
+    return render_template('editar.html', titulo="Editando os dados funcionário", funcionario=funcionario)
+
+
+
+
 @app.route('/login')
 def login():
     proxima = request.args.get('proxima')
@@ -129,6 +139,7 @@ def autenticar():
     else:
         flash('Usuário ou Senha Inválidos, insira os dados novamente!')
         return redirect('/login')
+
 
 @app.route('/logout')
 def logout():
