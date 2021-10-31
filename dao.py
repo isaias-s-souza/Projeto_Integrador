@@ -38,7 +38,21 @@ class FuncionarioDao:
     def salvar(self, funcionario):
         cursor = self.__db.cursor()
 
-        if not(funcionario.get_codigo()):
+        if (funcionario.get_codigo()):
+            dados_funcionario_atualizacao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
+                                            funcionario.get_cnpj(), funcionario.cliente, funcionario.fornecedor,
+                                            funcionario.funcionario, funcionario.login, funcionario.ativo,
+                                            funcionario.telefone, funcionario.celular, funcionario.email,
+                                            funcionario.get_codigo()]
+
+            SQL_ATUALIZA_FUNCIONARIO       = "UPDATE PESSOA SET NOME = ?, ENDERECO = ?, CPF = ?, CNPJ = ?," \
+                                             " CLIENTE = ?, FORNECEDOR = ?, FUNCIONARIO = ?, LOGIN = ?, " \
+                                             "SENHA = ?, ATIVO = ?, TELEFONE = ?, CELULAR = ?, EMAIL = ? WHERE COD = ?"
+
+            cursor.execute(SQL_ATUALIZA_FUNCIONARIO, dados_funcionario_atualizacao)
+
+        else:
+
             dados_funcionario_Insercao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
                                           funcionario.get_cnpj(), funcionario.cliente, funcionario.fornecedor,
                                           funcionario.funcionario, funcionario.login, funcionario.ativo,
@@ -48,6 +62,7 @@ class FuncionarioDao:
                                           "VALUES(?, ?, ?, ?, " \
                                           " ?, ?, ?, ?, '123', ?, ?, ?, ?)"
             cursor.execute(SQL_CRIA_PESSOA_FUNCIONARIO, dados_funcionario_Insercao)
+
         self.__db.commit()
         return funcionario
 
