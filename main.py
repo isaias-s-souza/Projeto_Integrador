@@ -22,8 +22,6 @@ conta_extrato_dao   = ContaExtratoDao(DB)
 funcionario_dao     = FuncionarioDao(DB)
 fornecedor_dao      = FornecedorDao(DB)
 
-
-
 @app.route('/')
 def index():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
@@ -100,21 +98,26 @@ def criar_fornecedor():
     #celular, email, datacadastro, razaosocial, codigo=None
     novo_fornecedor = Fornecedor(nome=nome, cliente=False, fornecedor=True, funcionario=False,
                                  endereco=endereco, cpf=cpf, cnpj=cnpj, ativo=True, telefone='',
-                                 celular='', email='', datacadastro='',razaosocial=razaosocial)
+                                 celular='', email='', datacadastro='', razaosocial=razaosocial)
 
     fornecedor_dao.salvar(novo_fornecedor)
     lista = fornecedor_dao.listar()
     return render_template('fornecedor.html', fornecedores=lista)
 
-@app.route('/editar/<int:cod>')
-def editar(cod):
-    if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect('/login?proxima=editar')
-    funcionario = funcionario_dao.busca_por_id()
-    return render_template('editar.html', titulo="Editando os dados funcionário", funcionario=funcionario)
-
-
-
+@app.route('/alterar_funcionario', methods=['POST', ])
+def alterar_funcionario():
+    id = request.form['id-alteracao']
+    nome = request.form['nome-alteracao']
+    endereco = request.form['endereco-alteracao']
+    cpf = request.form['cpf-alteracao']
+    cnpj = request.form['cnpj-alteracao']
+    login = request.form['login-alteracao']
+    funcionario_editado = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
+                                   cpf=cpf, cnpj=cnpj, login=login, ativo=True, telefone='', celular='', email='',
+                                   datacadastro='', codigo=id)
+    funcionario_dao.salvar(funcionario_editado)
+    lista = funcionario_dao.listar()
+    return render_template('funcionario.html', funcionarios=lista)
 
 @app.route('/login')
 def login():

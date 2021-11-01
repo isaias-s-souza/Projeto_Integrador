@@ -5,6 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sistema de Gerenciamento Financeiro</title>
         <link rel = "stylesheet" href = "{{url_for('static', filename = 'bootstrap.css')}}">
+        <script src = "{{url_for('static', filename = 'bootstrap.bundle.js')}}"></script>
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel = "stylesheet" href = "{{url_for('static', filename = 'style.css')}}">
+        <script src = "{{url_for('static', filename = 'global.js')}}"></script>
+        <script>
+        var _linhaAlteracao = null;
+        function CarregaEdicaoFunc(TagControle){
+
+            _linhaAlteracao = $(TagControle).parents("tr");
+            var colunasAlteracao = _linhaAlteracao.children("td");
+
+            $("#id-alteracao").val($(colunasAlteracao[1]).text());
+            $("#nome-alteracao").val($(colunasAlteracao[2]).text());
+            $("#endereco-alteracao").val($(colunasAlteracao[3]).text());
+            $("#cpf-alteracao").val($(colunasAlteracao[4]).text());
+            $("#cnpj-alteracao").val($(colunasAlteracao[5]).text());
+            $("#login-alteracao").val($(colunasAlteracao[6]).text());
+        };
+    </script>
     </head>
     <body>
         <div class="container">
@@ -24,8 +43,5 @@
                 {% endwith %}
             </div>
         </div>
-        <script src = "{{url_for('static', filename = 'bootstrap.bundle.js')}}"></script>
-        <script src = "{{url_for('static', filename = 'global.js')}}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     </body>
 </html>
