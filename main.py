@@ -112,6 +112,7 @@ def alterar_funcionario():
     cpf = request.form['cpf-alteracao']
     cnpj = request.form['cnpj-alteracao']
     login = request.form['login-alteracao']
+
     funcionario_editado = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
                                    cpf=cpf, cnpj=cnpj, login=login, ativo=True, telefone='', celular='', email='',
                                    datacadastro='', codigo=id)

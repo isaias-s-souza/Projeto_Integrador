@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sistema de Gerenciamento Financeiro</title>
         <link rel = "stylesheet" href = "{{url_for('static', filename = 'bootstrap.css')}}">
-        <script src = "{{url_for('static', filename = 'bootstrap.bundle.js')}}"></script>
-        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel = "stylesheet" href = "{{url_for('static', filename = 'style.css')}}">
-        <script src = "{{url_for('static', filename = 'global.js')}}"></script>
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src = "{{url_for('static', filename = 'bootstrap.bundle.js')}}"></script>
+        <script src = "../static/global.js"></script>
         <script>
         var _linhaAlteracao = null;
         function CarregaEdicaoFunc(TagControle){
@@ -23,7 +23,24 @@
             $("#cnpj-alteracao").val($(colunasAlteracao[5]).text());
             $("#login-alteracao").val($(colunasAlteracao[6]).text());
         };
-    </script>
+
+        function myFunction() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(e) {
+          if (!e.target.matches('.dropbtn')) {
+          var myDropdown = document.getElementById("myDropdown");
+            if (myDropdown.classList.contains('show')) {
+              myDropdown.classList.remove('show');
+            }
+          }
+        }
+
+
+        </script>
+
     </head>
     <body>
         <div class="container">
