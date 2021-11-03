@@ -109,13 +109,17 @@ def alterar_funcionario():
     id = request.form['id-alteracao']
     nome = request.form['nome-alteracao']
     endereco = request.form['endereco-alteracao']
+    telefone = request.form['telefone-alteracao']
+    celular = request.form['celular-alteracao']
+    email = request.form['email-alteracao']
     cpf = request.form['cpf-alteracao']
-    cnpj = request.form['cnpj-alteracao']
     login = request.form['login-alteracao']
-
+    ativo = request.form.get('ativo-alteracao')
+    
+    print(type(ativo))
     funcionario_editado = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
-                                   cpf=cpf, cnpj=cnpj, login=login, ativo=True, telefone='', celular='', email='',
-                                   datacadastro='', codigo=id)
+                                   cpf=cpf, cnpj='', login=login, ativo=ativo, telefone=telefone, celular=celular, 
+                                   email=email, datacadastro='', codigo=id)
     funcionario_dao.salvar(funcionario_editado)
     lista = funcionario_dao.listar()
     return render_template('funcionario.html', funcionarios=lista)

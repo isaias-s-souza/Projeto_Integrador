@@ -1,4 +1,5 @@
 from models import Funcionario, ContaExtrato, Fornecedor
+from datetime import date, datetime
 
 class ContaExtratoDao:
     def __init__(self, db):
@@ -39,11 +40,13 @@ class FuncionarioDao:
         cursor = self.__db.cursor()
 
         if (funcionario.get_codigo()):
-            dados_funcionario_atualizacao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
-                                            funcionario.get_cnpj(), funcionario.login, funcionario.get_codigo()]
+            dados_funcionario_atualizacao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.telefone,
+                                             funcionario.celular, funcionario.email, funcionario.get_cpf(),
+                                             funcionario.login, funcionario.ativo, funcionario.get_codigo()]
 
-            SQL_ATUALIZA_FUNCIONARIO       = "UPDATE PESSOA SET NOME = ?, ENDERECO = ?, CPF = ?, CNPJ = ?," \
-                                             "LOGIN = ? WHERE COD = ?"
+            SQL_ATUALIZA_FUNCIONARIO       = "UPDATE PESSOA SET NOME = ?, ENDERECO = ?,  TELEFONE = ?, CELULAR = ?," \
+                                             "EMAIL = ?, CPF = ?, LOGIN = ?, ATIVO = ? " \
+                                             "WHERE COD = ?"
 
             cursor.execute(SQL_ATUALIZA_FUNCIONARIO, dados_funcionario_atualizacao)
         else:
@@ -63,8 +66,8 @@ class FuncionarioDao:
 
     def listar(self):
         cursor = self.__db.cursor()
-        SQL_BUSCA_FUNCIONARIO = 'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-                                'SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
+        SQL_BUSCA_FUNCIONARIO = 'SELECT COD, NOME, ENDERECO, CPF, LOGIN, ATIVO,' \
+                                'TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
                                 'FROM PESSOA ' \
                                 'WHERE FUNCIONARIO = 1 ORDER BY COD'
         cursor.execute(SQL_BUSCA_FUNCIONARIO)
@@ -85,22 +88,22 @@ class FuncionarioDao:
                            fornecedor=False, funcionario=True, endereco='', cpf='', cnpj='',
                            ativo=True, telefone='', celular='', email='', datacadastro='')
 
-
-
 def traduz_funcionarios(funcionarios):
     def cria_funcionario_com_tupla(tupla):
-        #         0    1       2       3    4      5           6           7         8
-        #'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, ' \
-        #   9      10        11         12        13      14          15
-        #'SENHA, ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
-
+        #  0     1       2      3     4      5      
+        # COD, NOME, ENDERECO, CPF, LOGIN, ATIVO,' \
+        #    6        7        8          9      
+        # TELEFONE, CELULAR, EMAIL, DATA_CADASTRO
+        
         #(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, ativo, telefone,
-        #         celular, email, datacadastro, razaosocial, codigo=None, senha='')
-        return Funcionario(nome=tupla[1], cliente=tupla[5], fornecedor=tupla[6], funcionario=tupla[7],
-                           endereco=tupla[2], cpf=tupla[3], cnpj=tupla[4], login=tupla[8], ativo=tupla[10],
-                           telefone=tupla[12], celular=tupla[13], email=tupla[14], datacadastro=tupla[15],
-                           codigo=tupla[0])
-
+        #         celular, email, datacadastro, codigo=None, senha='')
+        dataCadastroFormatada = tupla[9].strftime('%d/%m/%Y')
+        
+        return Funcionario(nome=tupla[1], endereco=tupla[2], cpf=tupla[3], login=tupla[4], ativo=tupla[5], 
+                           telefone=tupla[6], celular=tupla[7], email=tupla[8], datacadastro=dataCadastroFormatada,
+                           codigo=tupla[0], cliente=False, fornecedor=False, funcionario=True, cnpj='',
+                           senha='')
+    
     return list(map(cria_funcionario_com_tupla, funcionarios))
 
 class FornecedorDao:
