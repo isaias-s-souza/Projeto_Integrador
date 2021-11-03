@@ -126,8 +126,8 @@ class Funcionario(Pessoa):
     # telefone, celular, email, datacadastro)
     def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj,  ativo, telefone,
                  celular, email, datacadastro, login, senha='', codigo=None):
-        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone, celular,
-                         email, datacadastro)
+        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, 
+                         telefone, celular, email, datacadastro)
         self.__codigo   =   codigo
         self.__login    =   login
         self.__senha    =   senha
