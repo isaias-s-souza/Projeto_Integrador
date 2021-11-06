@@ -64,14 +64,19 @@ def funcionario():
 
 @app.route('/criar_funcionario', methods = ['POST', ])
 def criar_funcioario():
+    
     nome            = request.form['nome']
     endereco        = request.form['endereco']
+    telefone        = request.form['telefone']
+    celular         = request.form['celular']
+    email           = request.form['email']
     cpf             = request.form['cpf']
-    cnpj            = request.form['cnpj']
     login           = request.form['login']
+    ativo =          request.form.get('ativo')
+
     novo_funcionario = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
-                                   cpf=cpf, cnpj=cnpj, login=login, ativo=True, telefone='', celular='', email='',
-                                   datacadastro='')
+                                   cpf=cpf, cnpj='', login=login, ativo=ativo, telefone=telefone, celular=celular, 
+                                   email=email, datacadastro='', codigo='')
 
     funcionario_dao.salvar(novo_funcionario)
     lista = funcionario_dao.listar()
@@ -116,7 +121,6 @@ def alterar_funcionario():
     login = request.form['login-alteracao']
     ativo = request.form.get('ativo-alteracao')
     
-    print(type(ativo))
     funcionario_editado = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
                                    cpf=cpf, cnpj='', login=login, ativo=ativo, telefone=telefone, celular=celular, 
                                    email=email, datacadastro='', codigo=id)

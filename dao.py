@@ -1,5 +1,5 @@
 from models import Funcionario, ContaExtrato, Fornecedor
-from datetime import date, datetime
+from datetime import  datetime
 
 class ContaExtratoDao:
     def __init__(self, db):
@@ -51,14 +51,12 @@ class FuncionarioDao:
             cursor.execute(SQL_ATUALIZA_FUNCIONARIO, dados_funcionario_atualizacao)
         else:
 
-            dados_funcionario_Insercao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.get_cpf(),
-                                          funcionario.get_cnpj(), funcionario.cliente, funcionario.fornecedor,
-                                          funcionario.funcionario, funcionario.login, funcionario.ativo,
-                                          funcionario.telefone, funcionario.celular, funcionario.email]
-            SQL_CRIA_PESSOA_FUNCIONARIO = "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, LOGIN, " \
-                                          "SENHA, ATIVO, TELEFONE, CELULAR, EMAIL) " \
-                                          "VALUES(?, ?, ?, ?, " \
-                                          " ?, ?, ?, ?, '123', ?, ?, ?, ?)"
+            dados_funcionario_Insercao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.telefone,
+                                         funcionario.celular, funcionario.email, funcionario.get_cpf(),
+                                         funcionario.login]
+            SQL_CRIA_PESSOA_FUNCIONARIO = "INSERT INTO PESSOA(NOME, ENDERECO, TELEFONE, CELULAR, EMAIL, CPF," \
+                                          "LOGIN)" \
+                                          "VALUES(?, ?, ?, ?, ?, ?, ?)"
             cursor.execute(SQL_CRIA_PESSOA_FUNCIONARIO, dados_funcionario_Insercao)
 
         self.__db.commit()
