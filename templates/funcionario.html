@@ -82,13 +82,6 @@
                                        <label for="login">Login</label>
                                        <input maxlength="255" type="text" id="login" name="login" class="form-control">
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="ativo" 
-                                        name="ativo">
-                                        <label for="ativo" class="form-check-label"> 
-                                            Ativo / Desativado
-                                        </label>
-                                    </div>
 
                                     </br>
                                     <button type="submit" class="btn btn-primary btn-salvar">
@@ -154,11 +147,11 @@
                                                 maxlength="25">
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="ativo-alteracao" 
-                                        name="ativo-alteracao">
                                         <label for="ativo-alteracao" class="form-check-label"> 
                                             Ativo / Desativado
                                         </label>
+                                        <input class="form-check-input" type="checkbox" id="ativo-alteracao" 
+                                        name="ativo-alteracao">
                                     </div>
 
                                     </br>
@@ -201,21 +194,24 @@
                 {% for funcionario in funcionarios %}
                     <tr>
                         <td>
-                            <center> <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     onclick="CarregaEdicaoFunc(this)" data-bs-target="#AlteracaoFuncionario">
                                Alterar
-                            </button></center>
+                            </button>
                         </td>
-                        <td>{{funcionario.get_codigo()}}</td>
-                        <td>{{funcionario.get_nome()}}</td>
-                        <td>{{funcionario.get_endereco()}}</td>
-                        <td>{{funcionario.telefone}}</td>
-                        <td>{{funcionario.celular}}</td>
-                        <td>{{funcionario.email}}</td>
-                        <td>{{funcionario.get_cpf()}}</td>
-                        <td>{{funcionario.login}}</td>
-                        <td>{{funcionario.datacadastro}}</td>
-                        <td>{%if funcionario.ativo %} Ativado {% else %} Desativado {% endif %}</td>
+                        <td> {{funcionario.get_codigo()}}</td>
+                        <td> {{funcionario.get_nome()}}</td>
+                        <td> {{funcionario.get_endereco()}}</td>
+                        <td> {{funcionario.telefone}}</td>
+                        <td> {{funcionario.celular}}</td>
+                        <td> {{funcionario.email}}</td>
+                        <td> {{funcionario.get_cpf()}}</td>
+                        <td> {{funcionario.login}}</td>
+                        <td> {{funcionario.datacadastro}}</td>
+                        <td> 
+                            {%if funcionario.ativo %} <img src="{{url_for('static', filename='images/check.svg')}}" alt="Ativo" width="25" height="25"> 
+                            {% else %} <img src="{{url_for('static', filename='images/close.svg')}}" alt="Desativado" width="25" height="25"> {% endif %}
+                        </td>
                         
                     </tr>
                 {% endfor %}

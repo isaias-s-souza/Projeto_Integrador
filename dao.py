@@ -53,10 +53,10 @@ class FuncionarioDao:
 
             dados_funcionario_Insercao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.telefone,
                                          funcionario.celular, funcionario.email, funcionario.get_cpf(),
-                                         funcionario.login]
+                                         funcionario.login, funcionario.funcionario, funcionario.ativo]
             SQL_CRIA_PESSOA_FUNCIONARIO = "INSERT INTO PESSOA(NOME, ENDERECO, TELEFONE, CELULAR, EMAIL, CPF," \
-                                          "LOGIN)" \
-                                          "VALUES(?, ?, ?, ?, ?, ?, ?)"
+                                          "LOGIN, FUNCIONARIO, ATIVO)" \
+                                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
             cursor.execute(SQL_CRIA_PESSOA_FUNCIONARIO, dados_funcionario_Insercao)
 
         self.__db.commit()

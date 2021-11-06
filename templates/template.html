@@ -4,28 +4,35 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sistema de Gerenciamento Financeiro</title>
-        <link rel = "stylesheet" href = "{{url_for('static', filename = 'bootstrap.css')}}">
-        <link rel = "stylesheet" href = "{{url_for('static', filename = 'style.css')}}">
-        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src = "{{url_for('static', filename = 'bootstrap.bundle.js')}}"></script>
-        <script src = "../static/global.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="../static/global.js"></script>
+        <link rel="stylesheet" href="../static/style.css">
         <script>
-        var _linhaAlteracao = null;
-        function CarregaEdicaoFunc(TagControle){
+            var _linhaAlteracao = null;
+            function CarregaEdicaoFunc(TagControle){
 
-            _linhaAlteracao = $(TagControle).parents("tr");
-            var colunasAlteracao = _linhaAlteracao.children("td");
+                _linhaAlteracao = $(TagControle).parents("tr");
+                var colunasAlteracao = _linhaAlteracao.children("td");
 
-            $("#id-alteracao").val($(colunasAlteracao[1]).text());
-            $("#nome-alteracao").val($(colunasAlteracao[2]).text());
-            $("#endereco-alteracao").val($(colunasAlteracao[3]).text());
-            $("#telefone-alteracao").val($(colunasAlteracao[4]).text());
-            $("#celular-alteracao").val($(colunasAlteracao[5]).text());
-            $("#email-alteracao").val($(colunasAlteracao[6]).text());
-            $("#cpf-alteracao").val($(colunasAlteracao[7]).text());
-            $("#login-alteracao").val($(colunasAlteracao[8]).text());
-            $("#ativo-alteracao").val($(colunasAlteracao[10]).val());
-        };
+                $("#id-alteracao").val($(colunasAlteracao[1]).text());
+                $("#nome-alteracao").val($(colunasAlteracao[2]).text());
+                $("#endereco-alteracao").val($(colunasAlteracao[3]).text());
+                $("#telefone-alteracao").val($(colunasAlteracao[4]).text());
+                $("#celular-alteracao").val($(colunasAlteracao[5]).text());
+                $("#email-alteracao").val($(colunasAlteracao[6]).text());
+                $("#cpf-alteracao").val($(colunasAlteracao[7]).text());
+                $("#login-alteracao").val($(colunasAlteracao[8]).text());
+
+                imagem_coluna_ativo = $(colunasAlteracao[10]).children('img');
+                if($(imagem_coluna_ativo[0]).attr('alt') == 'Ativo'){
+                    $("#ativo-alteracao").attr('checked','checked');
+                     
+                }else{
+                    $("#ativo-alteracao").removeAttr('checked');
+                }
+            };
 
         function myFunction() {
           document.getElementById("myDropdown").classList.toggle("show");

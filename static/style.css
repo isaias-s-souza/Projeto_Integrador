@@ -1,4 +1,9 @@
 .modal-content
 {
     background-color: #D7D8DA;
+};
+
+td
+{
+    text-align: center;
 }

@@ -1,3 +1,9 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+
+#Ignora todos arquivos de configuração
+*.ini
+
+#Ignora arquivos do pycache
+*.pyc

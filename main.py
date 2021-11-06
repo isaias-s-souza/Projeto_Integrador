@@ -72,10 +72,9 @@ def criar_funcioario():
     email           = request.form['email']
     cpf             = request.form['cpf']
     login           = request.form['login']
-    ativo =          request.form.get('ativo')
 
     novo_funcionario = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
-                                   cpf=cpf, cnpj='', login=login, ativo=ativo, telefone=telefone, celular=celular, 
+                                   cpf=cpf, cnpj='', login=login, ativo=True, telefone=telefone, celular=celular, 
                                    email=email, datacadastro='', codigo='')
 
     funcionario_dao.salvar(novo_funcionario)
@@ -119,7 +118,11 @@ def alterar_funcionario():
     email = request.form['email-alteracao']
     cpf = request.form['cpf-alteracao']
     login = request.form['login-alteracao']
-    ativo = request.form.get('ativo-alteracao')
+
+    if request.form.get('ativo-alteracao') == None:
+        ativo = False
+    else:
+        ativo = True
     
     funcionario_editado = Funcionario(nome=nome, cliente=False, fornecedor=False, funcionario=True, endereco=endereco,
                                    cpf=cpf, cnpj='', login=login, ativo=ativo, telefone=telefone, celular=celular, 
