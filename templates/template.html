@@ -7,9 +7,30 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
         <script src="../static/global.js"></script>
         <link rel="stylesheet" href="../static/style.css">
-        <script>
+        
+        
+
+    </head>
+    <body>
+        <script type="text/javascript">
+            //Masks
+
+            $('#telefone').inputmask('(00) 000-00009');
+            $("#celular").mask("(00) 0000-00009"); 
+            $("#cpf").mask("000.000.000-00"); 
+            $("#cnpj").mask("00.000.000/0000-00");
+                
+            //Placeholders
+                
+            document.getElementById("#telefone").placeholder = "(00) 0000-0000";
+            document.getElementById("celular").placeholder  = "(00) 00000-0000";
+            document.getElementById("cpf").placeholder  = "000.000.000-00";
+            document.getElementById("cnpj").placeholder  = "00.000.000/0000-00";
+               
+    
             var _linhaAlteracao = null;
             function CarregaEdicaoFunc(TagControle){
 
@@ -28,31 +49,53 @@
                 imagem_coluna_ativo = $(colunasAlteracao[10]).children('img');
                 if($(imagem_coluna_ativo[0]).attr('alt') == 'Ativo'){
                     $("#ativo-alteracao").attr('checked','checked');
-                     
+                        
                 }else{
                     $("#ativo-alteracao").removeAttr('checked');
                 }
             };
 
-        function myFunction() {
-          document.getElementById("myDropdown").classList.toggle("show");
-        }
+            function CarregaEdicaoForn(TagControle){
 
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function(e) {
-          if (!e.target.matches('.dropbtn')) {
-          var myDropdown = document.getElementById("myDropdown");
-            if (myDropdown.classList.contains('show')) {
-              myDropdown.classList.remove('show');
+                _linhaAlteracao = $(TagControle).parents("tr");
+                var colunasAlteracao = _linhaAlteracao.children("td");
+
+                $("#id-alteracao").val($(colunasAlteracao[1]).text());
+                $("#nome-alteracao").val($(colunasAlteracao[2]).text());
+                $("#razaosocial-alteracao").val($(colunasAlteracao[3]).text());
+                $("#endereco-alteracao").val($(colunasAlteracao[4]).text());
+                $("#telefone-alteracao").val($(colunasAlteracao[5]).text());
+                $("#celular-alteracao").val($(colunasAlteracao[6]).text());
+                $("#email-alteracao").val($(colunasAlteracao[7]).text());
+                $("#cpf-alteracao").val($(colunasAlteracao[8]).text());
+                $("#cnpj-alteracao").val($(colunasAlteracao[9]).text());
+
+                imagem_coluna_ativo = $(colunasAlteracao[10]).children('img');
+                if($(imagem_coluna_ativo[0]).attr('alt') == 'Ativo'){
+                    $("#ativo-alteracao").attr('checked','checked');
+                        
+                }else{
+                    $("#ativo-alteracao").removeAttr('checked');
+                }
+            };
+
+
+            function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
             }
-          }
-        }
 
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(e) {
+            if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("myDropdown");
+                if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+                }
+            }
+            }
 
-        </script>
-
-    </head>
-    <body>
+    
+            </script>
         <div class="container">
 
             <!-- Indica local onde o restante da página será carregado para cada

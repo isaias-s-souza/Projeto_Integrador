@@ -166,6 +166,15 @@ class Fornecedor(Pessoa):
     def razaosocial(self, razaosocial):
         self.__razaosocial = razaosocial
 
+class Cliente(Pessoa):
+    #(self, codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo,
+    # telefone, celular, email, datacadastro)
+    def __init__(self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
+                 celular, email, datacadastro, codigo=None):
+        super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone, celular,
+                         email, datacadastro)
+        self.__codigo=codigo
+
 
 
 class ContaExtrato:

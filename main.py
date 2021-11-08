@@ -96,13 +96,16 @@ def criar_fornecedor():
     nome            = request.form['nome']
     razaosocial     = request.form['razaosocial']
     endereco        = request.form['endereco']
+    telefone        = request.form['telefone']
+    celular         = request.form['celular']
+    email           = request.form['email']
     cpf             = request.form['cpf']
     cnpj            = request.form['cnpj']
     #self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
     #celular, email, datacadastro, razaosocial, codigo=None
     novo_fornecedor = Fornecedor(nome=nome, cliente=False, fornecedor=True, funcionario=False,
-                                 endereco=endereco, cpf=cpf, cnpj=cnpj, ativo=True, telefone='',
-                                 celular='', email='', datacadastro='', razaosocial=razaosocial)
+                                 endereco=endereco, cpf=cpf, cnpj=cnpj, ativo=True, telefone=telefone,
+                                 celular=celular, email=email, datacadastro='', razaosocial=razaosocial)
 
     fornecedor_dao.salvar(novo_fornecedor)
     lista = fornecedor_dao.listar()
@@ -130,6 +133,32 @@ def alterar_funcionario():
     funcionario_dao.salvar(funcionario_editado)
     lista = funcionario_dao.listar()
     return render_template('funcionario.html', funcionarios=lista)
+
+@app.route('/alterar_fornecedor', methods=['POST', ])
+def alterar_fornecedor():
+    id = request.form['id-alteracao']
+    nome = request.form['nome-alteracao']
+    razaosocial = request.form['razaosocial-alteracao']
+    endereco = request.form['endereco-alteracao']
+    telefone = request.form['telefone-alteracao']
+    celular = request.form['celular-alteracao']
+    email = request.form['email-alteracao']
+    cpf = request.form['cpf-alteracao']
+    cnpj = request.form['cnpj']
+
+    if request.form.get('ativo-alteracao') == None:
+        ativo = False
+    else:
+        ativo = True
+    # nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
+    #celular, email, datacadastro, razaosocial, codigo=None
+    fornecedor_editado = Fornecedor(nome=nome, cliente=False, fornecedor=True, funcionario=False, endereco=endereco,
+                                   cpf=cpf, cnpj=cnpj, ativo=ativo, telefone=telefone, celular=celular, 
+                                   email=email, datacadastro='', razaosocial=razaosocial, codigo=id)
+    fornecedor_dao.salvar(fornecedor_editado)
+    lista = fornecedor_dao.listar()
+    return render_template('funcionario.html', funcionarios=lista)
+
 
 @app.route('/login')
 def login():
