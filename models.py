@@ -128,7 +128,6 @@ class Funcionario(Pessoa):
                  celular, email, datacadastro, login, senha='', codigo=None):
         super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, 
                          telefone, celular, email, datacadastro)
-        self.__codigo   =   codigo
         self.__login    =   login
         self.__senha    =   senha
 
@@ -155,7 +154,6 @@ class Fornecedor(Pessoa):
                  celular, email, datacadastro, razaosocial, codigo=None):
         super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone, celular,
                          email, datacadastro)
-        self.__codigo=codigo
         self.__razaosocial = razaosocial
 
     #Propriedades
@@ -173,7 +171,6 @@ class Cliente(Pessoa):
                  celular, email, datacadastro, codigo=None):
         super().__init__(codigo, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone, celular,
                          email, datacadastro)
-        self.__codigo=codigo
 
 
 

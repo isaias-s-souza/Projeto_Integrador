@@ -12,10 +12,10 @@ config = configparser.ConfigParser()
 config.read('CONFIGURACAO.ini')
 
 DB = pyodbc.connect('Driver={SQL Server};' +
-                      'Server=' + config['CONFIGURACAO_GERAL']['DATABASE'] + ';' +
-                      'Database=SISTEMA_FINANCEIRO;' +
-                      'UID=sa;' +
-                      'PWD=2021financesys;' +
+                      'Server=' + config['CONFIGURACAO_GERAL']['SERVIDOR'] + ';' +
+                      'Database=' + config['CONFIGURACAO_GERAL']['BANCODEDADOS'] + ';' +
+                      'UID=' + config['CONFIGURACAO_GERAL']['USUARIO'] + ';' +
+                      'PWD=' + config['CONFIGURACAO_GERAL']['SENHA'] + ';' +
                       'Trusted_Connection=no;')
 
 conta_extrato_dao   = ContaExtratoDao(DB)
