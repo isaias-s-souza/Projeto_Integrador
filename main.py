@@ -144,7 +144,7 @@ def alterar_fornecedor():
     celular = request.form['celular-alteracao']
     email = request.form['email-alteracao']
     cpf = request.form['cpf-alteracao']
-    cnpj = request.form['cnpj']
+    cnpj = request.form['cnpj-alteracao']
 
     if request.form.get('ativo-alteracao') == None:
         ativo = False
@@ -157,7 +157,7 @@ def alterar_fornecedor():
                                    email=email, datacadastro='', razaosocial=razaosocial, codigo=id)
     fornecedor_dao.salvar(fornecedor_editado)
     lista = fornecedor_dao.listar()
-    return render_template('funcionario.html', funcionarios=lista)
+    return render_template('fornecedor.html', fornecedores=lista)
 
 
 @app.route('/login')

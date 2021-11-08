@@ -61,7 +61,7 @@ class Pessoa:
     def get_cnpj(self):
         return self.__cnpj
 
-    def set_cpf(self, cnpj):
+    def set_cnpj(self, cnpj):
         self.__cnpj = cnpj
 
     #Definição de atributos da classe como propriedade
