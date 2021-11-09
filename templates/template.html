@@ -79,6 +79,30 @@
                 }
             };
 
+             function CarregaEdicaoForn(TagControle){
+
+                _linhaAlteracao = $(TagControle).parents("tr");
+                var colunasAlteracao = _linhaAlteracao.children("td");
+
+                $("#id-alteracao").val($(colunasAlteracao[1]).text());
+                $("#nome-alteracao").val($(colunasAlteracao[2]).text());
+                $("#razaosocial-alteracao").val($(colunasAlteracao[3]).text());
+                $("#endereco-alteracao").val($(colunasAlteracao[4]).text());
+                $("#telefone-alteracao").val($(colunasAlteracao[5]).text());
+                $("#celular-alteracao").val($(colunasAlteracao[6]).text());
+                $("#email-alteracao").val($(colunasAlteracao[7]).text());
+                $("#cpf-alteracao").val($(colunasAlteracao[8]).text());
+                $("#cnpj-alteracao").val($(colunasAlteracao[9]).text());
+
+                imagem_coluna_ativo = $(colunasAlteracao[10]).children('img');
+                if($(imagem_coluna_ativo[0]).attr('alt') == 'Ativo'){
+                    $("#ativo-alteracao").attr('checked','checked');
+                        
+                }else{
+                    $("#ativo-alteracao").removeAttr('checked');
+                }
+            };
+
 
             function myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
