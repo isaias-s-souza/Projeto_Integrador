@@ -110,13 +110,27 @@ class FornecedorDao:
 
     def salvar(self, fornecedor):
         cursor = self.__db.cursor()
-        SQL_CRIA_PESSOA_FORNECEDOR  =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, " \
+
+        if (fornecedor.get_codigo()):
+            dados_fornecedor_atualizacao = [fornecedor.get_nome(), fornecedor.get_endereco(), fornecedor.telefone,
+                                             fornecedor.celular, fornecedor.email, fornecedor.get_cpf(),
+                                             fornecedor.get_cnpj(), fornecedor.ativo, fornecedor.get_codigo()]
+
+            SQL_ATUALIZA_FUNCIONARIO  = "UPDATE PESSOA SET NOME = ?, ENDERECO = ?,  TELEFONE = ?, CELULAR = ?," \
+                                        "EMAIL = ?, CPF = ?,CNPJ = ?,  ATIVO = ? " \
+                                        "WHERE COD = ?"
+
+            cursor.execute(SQL_ATUALIZA_FUNCIONARIO, dados_fornecedor_atualizacao)
+            
+        else:
+
+            SQL_CRIA_PESSOA_FORNECEDOR  ="INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, " \
                                         "ATIVO, RAZAO_SOCIAL, TELEFONE, CELULAR, EMAIL) " \
                                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        dados_fornecedor_Insercao = [fornecedor.get_nome(), fornecedor.get_endereco(), fornecedor.get_cpf(),
-                                fornecedor.get_cnpj(), fornecedor.cliente, fornecedor.fornecedor,
-                                fornecedor.funcionario, fornecedor.ativo, fornecedor.razaosocial,
-                                fornecedor.telefone, fornecedor.celular, fornecedor.email]
+            dados_fornecedor_Insercao = [fornecedor.get_nome(), fornecedor.get_endereco(), fornecedor.get_cpf(),
+                                        fornecedor.get_cnpj(), fornecedor.cliente, fornecedor.fornecedor,
+                                        fornecedor.funcionario, fornecedor.ativo, fornecedor.razaosocial,
+                                        fornecedor.telefone, fornecedor.celular, fornecedor.email]
 
         if not(fornecedor.get_codigo()):
             cursor.execute(SQL_CRIA_PESSOA_FORNECEDOR, dados_fornecedor_Insercao)

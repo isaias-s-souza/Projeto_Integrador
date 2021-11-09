@@ -199,15 +199,15 @@
                                Alterar
                             </button>
                         </td>
-                        <td> {{funcionario.get_codigo()}}</td>
-                        <td> {{funcionario.get_nome()}}</td>
-                        <td> {{funcionario.get_endereco()}}</td>
-                        <td> {{funcionario.telefone}}</td>
-                        <td> {{funcionario.celular}}</td>
-                        <td> {{funcionario.email}}</td>
-                        <td> {{funcionario.get_cpf()}}</td>
-                        <td> {{funcionario.login}}</td>
-                        <td> {{funcionario.datacadastro}}</td>
+                        <td>{{funcionario.get_codigo()}}</td>
+                        <td>{{funcionario.get_nome()}}</td>
+                        <td>{{funcionario.get_endereco()}}</td>
+                        <td>{{funcionario.telefone}}</td>
+                        <td>{{funcionario.celular}}</td>
+                        <td>{{funcionario.email}}</td>
+                        <td>{{funcionario.get_cpf()}}</td>
+                        <td>{{funcionario.login}}</td>
+                        <td>{{funcionario.datacadastro}}</td>
                         <td> 
                             {%if funcionario.ativo %} <img src="{{url_for('static', filename='images/check.svg')}}" alt="Ativo" width="25" height="25"> 
                             {% else %} <img src="{{url_for('static', filename='images/close.svg')}}" alt="Desativado" width="25" height="25"> {% endif %}

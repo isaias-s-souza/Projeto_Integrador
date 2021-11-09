@@ -17,7 +17,7 @@
                                      aria-labelledby="navbarDropdownMenuLink"
                                      id="myDropdown">
                                     <a class="dropdown-item" href="/conta_extrato">Conta</a>
-                                    <a class="dropdown-item" href="#">Cliente</a>
+                                    <a class="dropdown-item" href="/cliente">Cliente</a>
                                     <a class="dropdown-item" href="/fornecedor">Fornecedor</a>
                                     <a class="dropdown-item" href="/funcionario">Funcionário</a>
                                 </div>
@@ -208,18 +208,17 @@
                                Alterar
                             </button>
                         </td>
-                        <td> {{fornecedor.get_codigo()}}</td>
-                        <td> {{fornecedor.get_nome()}}</td>
-                        <td> {{fornecedor.razaosocial}}</td>
-                        <td> {{fornecedor.get_endereco()}}</td>
-                        <td> {{fornecedor.telefone}}</td>
-                        <td> {{fornecedor.celular}}</td>
-                        <td> {{fornecedor.email}}</td>
-                        <td> {{fornecedor.get_cpf()}}</td>
-                        <td> {{fornecedor.get_cnpj()}}</td>
-                        <td> {{fornecedor.datacadastro}}</td>
-                        <td> 
-                            {%if fornecedor.ativo %} <img src="{{url_for('static', filename='images/check.svg')}}" alt="Ativo" width="25" height="25"> 
+                        <td>{{fornecedor.get_codigo()}}</td>
+                        <td>{{fornecedor.get_nome()}}</td>
+                        <td>{{fornecedor.razaosocial}}</td>
+                        <td>{{fornecedor.get_endereco()}}</td>
+                        <td>{{fornecedor.telefone}}</td>
+                        <td>{{fornecedor.celular}}</td>
+                        <td>{{fornecedor.email}}</td>
+                        <td>{{fornecedor.get_cpf()}}</td>
+                        <td>{{fornecedor.get_cnpj()}}</td>
+                        <td>{{fornecedor.datacadastro}}</td>
+                        <td>{%if fornecedor.ativo %} <img src="{{url_for('static', filename='images/check.svg')}}" alt="Ativo" width="25" height="25"> 
                             {% else %} <img src="{{url_for('static', filename='images/close.svg')}}" alt="Desativado" width="25" height="25"> {% endif %}
                         </td>
                         
