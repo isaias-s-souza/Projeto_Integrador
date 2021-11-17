@@ -114,8 +114,8 @@ def fornecedor():
         return render_template('fornecedor.html', fornecedores=lista)
 
 
-@app.route('/criar_fornecedor', methods=['POST', ])
-def criar_fornecedor():
+@app.route('/criar_cliente', methods=['POST', ])
+def criar_cliente():
     nome            = request.form['nome']
     razaosocial     = request.form['razaosocial']
     endereco        = request.form['endereco']
@@ -189,7 +189,7 @@ def criar_fornecedor():
     return render_template('cliente.html', clientes=lista)
 
 @app.route('/alterar_cliente', methods=['POST', ])
-def alterar_fornecedor():
+def alterar_cliente():
     id = request.form['id-alteracao']
     nome = request.form['nome-alteracao']
     endereco = request.form['endereco-alteracao']
