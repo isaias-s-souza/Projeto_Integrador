@@ -1,6 +1,4 @@
-from models import Funcionario, ContaExtrato, Fornecedor
-from datetime import  datetime
-
+from models import Cliente, Funcionario, ContaExtrato, Fornecedor
 class ContaExtratoDao:
     def __init__(self, db):
         self.__db = db
@@ -164,6 +162,54 @@ def traduz_fornecedor(fornecedor):
                            razaosocial=tupla[9], codigo=tupla[0])
 
     return list(map(cria_fornecedor_com_tupla, fornecedor))
+
+
+class ClienteDao:
+    def __init__(self, db):
+        self.__db = db
+
+    def salvar(self, cliente):
+        cursor = self.__db.cursor()
+        SQL_CRIA_PESSOA_CLIENTE  =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, " \
+                                        "ATIVO, TELEFONE, CELULAR, EMAIL) " \
+                                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        dados_cliente_Insercao = [   cliente.get_nome(), cliente.get_endereco(), cliente.get_cpf(),
+                                     cliente.get_cnpj(), cliente.cliente, cliente.fornecedor,
+                                     cliente.funcionario, cliente.ativo, cliente.telefone, 
+                                     cliente.celular, cliente.email]
+
+        if not(cliente.get_codigo()):
+            cursor.execute(SQL_CRIA_PESSOA_CLIENTE, dados_cliente_Insercao)
+        self.__db.commit()
+        return cliente
+
+    def listar(self):
+        SQL_BUSCA_CLIENTE =    'SELECT COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, ' \
+                               'ATIVO, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO ' \
+                               'FROM PESSOA ' \
+                               'WHERE CLIENTE = 1 ' \
+                               'ORDER BY COD'
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_CLIENTE)
+        cliente = traduz_cliente(cursor.fetchall())
+        return cliente
+
+
+def traduz_cliente(cliente):
+    def cria_cliente_com_tupla(tupla):
+        # 0    1       2       3    4       5          6            7
+        #COD, NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO,
+        #  8       9        10       11         12
+        #ATIVO, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO
+
+        # self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
+        # celular, email, datacadastro, razaosocial, codigo=None
+        return Cliente(nome=tupla[1], cliente=tupla[5], fornecedor=tupla[6], funcionario=tupla[7],
+                           endereco=tupla[2], cpf=tupla[3], cnpj=tupla[4], ativo=tupla[8],
+                           telefone=tupla[9], celular=tupla[10], email=tupla[11], datacadastro=tupla[12],
+                           codigo=tupla[0])
+
+    return list(map(cria_cliente_com_tupla, cliente))
 
 
 
