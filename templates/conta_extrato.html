@@ -17,7 +17,7 @@
                                      aria-labelledby="navbarDropdownMenuLink"
                                      id="myDropdown">
                                     <a class="dropdown-item" href="/conta_extrato">Conta</a>
-                                    <a class="dropdown-item" href="#">Cliente</a>
+                                    <a class="dropdown-item" href="/cliente">Cliente</a>
                                     <a class="dropdown-item" href="/fornecedor">Fornecedor</a>
                                     <a class="dropdown-item" href="/funcionario">Funcionário</a>
                                 </div>
@@ -41,57 +41,147 @@
                     </div>
                 </div>
             </nav>
-            <form action="/criar_conta_extrato" method="post">
-                <center><h1>Cadastro de Contas</h1></center>
-                <fieldset>
-                    <div class="form-group">
-                      <label for="nome">Nome</label>
-                        <input type="text"  maxlength="50" id="nome" name="nome" class="form-control">
+            
+            <!--CADASTRO -->
+            <div class="modal fade" id="CadastroConta" data-bs-backdrop="static" data-bs-keyboard="false"
+                 tabindex="-1" aria-labelledby="CadastroContaLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="CadastroContaLabel">Cadastro de Conta</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/criar_conta_extrato"  method="post">
+                                <fieldset>
+                                    <div class="form-group">
+                                      <label for="nome">Nome</label>
+                                        <input maxlength="50" type="text" id="nome" name="nome" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="descricao">Descrição</label>
+                                       <input maxlength="250" type="text" id="descricao" name="descricao" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="agencia">Agência</label>
+                                        <input  maxlength="20" type="text" id="agencia" name="agencia" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numero-conta">Nº da Conta</label>
+                                        <input  maxlength="30" type="text" id="numero-conta" name="numero-conta" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="saldo-inicial">Saldo Inicial</label>
+                                        <input  maxlength="255" type="number" id="saldo-inicial" name="saldo-inicial" class="form-control">
+                                    </div>
+                                    </br>
+                                    <button type="submit" class="btn btn-primary btn-salvar">
+                                        Salvar
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                    </br>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
-                     <!--descricao, agencia, numero_conta, saldo_inicial, ativo-->
-                    <div class="form-group">
-                       <label for="descricao">Descricao</label>
-                       <input type="text" maxlength="250" id="descricao" name="descricao" class="form-control">
+                </div>
+            </div>
+
+            <!--ALTERAÇÃO Conta-->
+            <div class="modal fade" id="AlteracaoConta" data-bs-backdrop="static" data-bs-keyboard="false"
+                 tabindex="-1" aria-labelledby="AlteracaoContaLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content modal-secondary">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="AlteracaoContaLabel">Atualização de Conta</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/alterar_conta_extrato"  method="post">
+                                <fieldset>
+                                    <input type="hidden" name="id-alteracao" id="id-alteracao">
+                                    <div class="form-group">
+                                      <label for="nome-alteracao">Nome</label>
+                                        <input maxlength="50" type="text" id="nome-alteracao" name="nome-alteracao" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="descricao-alteracao">Descrição</label>
+                                       <input maxlength="250" type="text" id="descricao-alteracao" name="descricao-alteracao" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="agencia-alteracao">Agência</label>
+                                        <input  maxlength="20" type="text" id="agencia-alteracao" name="agencia-alteracao" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numero-conta-alteracao">Nº da Conta</label>
+                                        <input  maxlength="30" type="text" id="numero-conta-alteracao" name="numero-conta-alteracao" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="saldo-inicial-alteracao">Saldo Inicial</label>
+                                        <input  maxlength="255" type="number" id="saldo-inicial-alteracao" name="saldo-inicial-alteracao" class="form-control">
+                                    </div>
+                                    <div class="form-check">
+                                        <label for="ativo-alteracao" class="form-check-label"> 
+                                            Ativo / Desativado
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" id="ativo-alteracao" 
+                                        name="ativo-alteracao">
+                                    </div>
+                                    </br>
+                                    <button type="submit" class="btn btn-primary btn-salvar">
+                                        Salvar
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                    </br>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
-                    <div class="form-group">
-                       <label for="agencia">Agência</label>
-                       <input type="text" maxlength="20" id="agencia" name="agencia" class="form-control">
-                    </div>
-                    <div class="form-group">
-                       <label for="conta">Conta</label>
-                       <input type="text"  maxlength="25" id="conta" name="conta" class="form-control">
-                    </div>
-                    <div class="form-group">
-                       <label for="saldo_inicial">Saldo Inicial</label>
-                       <input id="saldo_inicial" step="any" type="number" name="saldo_inicial" class="form-control"
-                                maxlength="19"/>
-                    </div>
-                    </br>
-                    <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
-                    </br>
-                </fieldset>
-            </form>
+                </div>
+            </div>
             </br>
-            <table class="table table-striped table-responsive table-bordered">
+
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#CadastroConta">
+                Nova Conta
+            </button>
+            </br>
+            <table class="table table-secondary table-sm table-responsive table-striped table-bordered">
                 <thead class="thead-default">
                     <tr>
+                        <th>Ações</th>
+                        <th>#</th>
                         <th>Nome</th>
                         <th>Descrição</th>
                         <th>Agência</th>
-                        <th>Numero</th>
+                        <th>Nº da Conta</th>
                         <th>Saldo Inicial</th>
-                        <th>Status</th>
+                        <th>Ativo</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for conta in contas %}
                     <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    onclick="CarregaEdicaoConta(this)" data-bs-target="#AlteracaoConta">
+                               Alterar
+                            </button>
+                        </td>
+                        <td>{{conta.get_codigo()}}</td>
                         <td>{{conta.get_nome()}}</td>
                         <td>{{conta.get_descricao()}}</td>
                         <td>{{conta.agencia}}</td>
                         <td>{{conta.get_numero_conta()}}</td>
                         <td>{{conta.saldo_inicial}}</td>
-                        <td>{{conta.ativo}}</td>
+                        <td> 
+                            {%if conta.ativo %} <img src="{{url_for('static', filename='images/check.svg')}}" alt="Ativo" width="25" height="25"> 
+                            {% else %} <img src="{{url_for('static', filename='images/close.svg')}}" alt="Desativado" width="25" height="25"> {% endif %}
+                        </td>
+                        
                     </tr>
                 {% endfor %}
                 </tbody>

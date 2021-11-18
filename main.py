@@ -23,6 +23,7 @@ funcionario_dao     = FuncionarioDao(DB)
 fornecedor_dao      = FornecedorDao(DB)
 cliente_dao         = ClienteDao(DB)              
 
+
 @app.route('/')
 def index():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
@@ -39,20 +40,44 @@ def conta_extrato():
     else:
         return render_template('conta_extrato.html', contas=lista)
 
+
 @app.route('/criar_conta_extrato', methods = ['POST', ])
 def criar_conta_extrato():
     nome            = request.form['nome']
     descricao       = request.form['descricao']
     agencia         = request.form['agencia']
-    conta           = request.form['conta']
-    saldo_inicial   = request.form['saldo_inicial']
+    conta           = request.form['numero-conta']
+    saldo_inicial   = request.form['saldo-inicial']
 
     nova_conta_extrato = ContaExtrato(nome, descricao, agencia, conta, saldo_inicial, True)
 
     conta_extrato_dao.salvar(nova_conta_extrato)
     lista = conta_extrato_dao.listar()
+    return render_template('conta_extrato.html', contas=lista)
+
+
+@app.route('/alterar_conta_extrato', methods=['POST', ])
+def alterar_conta_extrato():
+    id              = request.form['id-alteracao']
+    nome            = request.form['nome-alteracao']
+    descricao       = request.form['descricao-alteracao']
+    agencia         = request.form['agencia-alteracao']
+    numero_conta    = request.form['numero-conta-alteracao']
+    saldo_inicial   = request.form['saldo-inicial-alteracao']
+    if request.form.get('ativo-alteracao') == None:
+        ativo = False
+    else:
+        ativo = True
+
+    conta_extrato_editada = ContaExtrato(nome=nome, descricao=descricao, agencia=agencia, 
+                                         numero_conta=numero_conta, saldo_inicial=saldo_inicial, 
+                                         ativo=ativo, codigo=id)
+
+    conta_extrato_dao.salvar(conta_extrato_editada)
+    lista = conta_extrato_dao.listar()
 
     return render_template('conta_extrato.html', contas=lista)
+
 
 @app.route('/funcionario')
 def funcionario():
@@ -84,14 +109,14 @@ def criar_funcioario():
 
 @app.route('/alterar_funcionario', methods=['POST', ])
 def alterar_funcionario():
-    id = request.form['id-alteracao']
-    nome = request.form['nome-alteracao']
-    endereco = request.form['endereco-alteracao']
-    telefone = request.form['telefone-alteracao']
-    celular = request.form['celular-alteracao']
-    email = request.form['email-alteracao']
-    cpf = request.form['cpf-alteracao']
-    login = request.form['login-alteracao']
+    id          = request.form['id-alteracao']
+    nome        = request.form['nome-alteracao']
+    endereco    = request.form['endereco-alteracao']
+    telefone    = request.form['telefone-alteracao']
+    celular     = request.form['celular-alteracao']
+    email       = request.form['email-alteracao']
+    cpf         = request.form['cpf-alteracao']
+    login       = request.form['login-alteracao']
 
     if request.form.get('ativo-alteracao') == None:
         ativo = False
@@ -114,8 +139,8 @@ def fornecedor():
         return render_template('fornecedor.html', fornecedores=lista)
 
 
-@app.route('/criar_cliente', methods=['POST', ])
-def criar_cliente():
+@app.route('/criar_fornecedor', methods=['POST', ])
+def criar_fornecedor():
     nome            = request.form['nome']
     razaosocial     = request.form['razaosocial']
     endereco        = request.form['endereco']
@@ -136,15 +161,15 @@ def criar_cliente():
 
 @app.route('/alterar_fornecedor', methods=['POST', ])
 def alterar_fornecedor():
-    id = request.form['id-alteracao']
-    nome = request.form['nome-alteracao']
+    id          = request.form['id-alteracao']
+    nome        = request.form['nome-alteracao']
     razaosocial = request.form['razaosocial-alteracao']
-    endereco = request.form['endereco-alteracao']
-    telefone = request.form['telefone-alteracao']
-    celular = request.form['celular-alteracao']
-    email = request.form['email-alteracao']
-    cpf = request.form['cpf-alteracao']
-    cnpj = request.form['cnpj-alteracao']
+    endereco    = request.form['endereco-alteracao']
+    telefone    = request.form['telefone-alteracao']
+    celular     = request.form['celular-alteracao']
+    email       = request.form['email-alteracao']
+    cpf         = request.form['cpf-alteracao']
+    cnpj        = request.form['cnpj-alteracao']
 
     if request.form.get('ativo-alteracao') == None:
         ativo = False
@@ -159,6 +184,7 @@ def alterar_fornecedor():
     lista = fornecedor_dao.listar()
     return render_template('fornecedor.html', fornecedores=lista)
 
+
 #CLIENTE
 @app.route('/cliente')
 def cliente():
@@ -170,7 +196,7 @@ def cliente():
 
 
 @app.route('/criar_cliente', methods=['POST', ])
-def criar_fornecedor():
+def criar_cliente():
     nome            = request.form['nome']
     endereco        = request.form['endereco']
     telefone        = request.form['telefone']
@@ -188,16 +214,17 @@ def criar_fornecedor():
     lista = cliente_dao.listar()
     return render_template('cliente.html', clientes=lista)
 
+
 @app.route('/alterar_cliente', methods=['POST', ])
 def alterar_cliente():
-    id = request.form['id-alteracao']
-    nome = request.form['nome-alteracao']
-    endereco = request.form['endereco-alteracao']
-    telefone = request.form['telefone-alteracao']
-    celular = request.form['celular-alteracao']
-    email = request.form['email-alteracao']
-    cpf = request.form['cpf-alteracao']
-    cnpj = request.form['cnpj-alteracao']
+    id          = request.form['id-alteracao']
+    nome        = request.form['nome-alteracao']
+    endereco    = request.form['endereco-alteracao']
+    telefone    = request.form['telefone-alteracao']
+    celular     = request.form['celular-alteracao']
+    email       = request.form['email-alteracao']
+    cpf         = request.form['cpf-alteracao']
+    cnpj        = request.form['cnpj-alteracao']
 
     if request.form.get('ativo-alteracao') == None:
         ativo = False
@@ -206,8 +233,8 @@ def alterar_cliente():
     #nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
     #celular, email, datacadastro, codigo=None
     cliente_editado = Cliente(nome=nome, cliente=True, fornecedor=False, funcionario=False, endereco=endereco,
-                                   cpf=cpf, cnpj=cnpj, ativo=ativo, telefone=telefone, celular=celular, 
-                                   email=email, datacadastro='', codigo=id)
+                              cpf=cpf, cnpj=cnpj, ativo=ativo, telefone=telefone, celular=celular, 
+                              email=email, datacadastro='', codigo=id)
     cliente_dao.salvar(cliente_editado)
     lista = cliente_dao.listar()
     return render_template('cliente.html', clientes=lista)

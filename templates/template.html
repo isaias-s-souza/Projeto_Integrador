@@ -29,9 +29,30 @@
             document.getElementById("celular").placeholder  = "(00) 00000-0000";
             document.getElementById("cpf").placeholder  = "000.000.000-00";
             document.getElementById("cnpj").placeholder  = "00.000.000/0000-00";
-               
     
             var _linhaAlteracao = null;
+
+            function CarregaEdicaoConta(TagControle){
+
+                _linhaAlteracao = $(TagControle).parents("tr");
+                var colunasAlteracao = _linhaAlteracao.children("td");
+
+                $("#id-alteracao").val($(colunasAlteracao[1]).text());
+                $("#nome-alteracao").val($(colunasAlteracao[2]).text());
+                $("#descricao-alteracao").val($(colunasAlteracao[3]).text());
+                $("#agencia-alteracao").val($(colunasAlteracao[4]).text());
+                $("#numero-conta-alteracao").val($(colunasAlteracao[5]).text());
+                $("#saldo-inicial-alteracao").val($(colunasAlteracao[6]).text());
+
+                imagem_coluna_ativo = $(colunasAlteracao[7]).children('img');
+                if($(imagem_coluna_ativo[0]).attr('alt') == 'Ativo'){
+                    $("#ativo-alteracao").attr('checked','checked');
+                        
+                }else{
+                    $("#ativo-alteracao").removeAttr('checked');
+                }
+            };
+
             function CarregaEdicaoFunc(TagControle){
 
                 _linhaAlteracao = $(TagControle).parents("tr");
@@ -79,20 +100,19 @@
                 }
             };
 
-             function CarregaEdicaoForn(TagControle){
+            function CarregaEdicaoCli(TagControle){
 
                 _linhaAlteracao = $(TagControle).parents("tr");
                 var colunasAlteracao = _linhaAlteracao.children("td");
 
                 $("#id-alteracao").val($(colunasAlteracao[1]).text());
                 $("#nome-alteracao").val($(colunasAlteracao[2]).text());
-                $("#razaosocial-alteracao").val($(colunasAlteracao[3]).text());
-                $("#endereco-alteracao").val($(colunasAlteracao[4]).text());
-                $("#telefone-alteracao").val($(colunasAlteracao[5]).text());
-                $("#celular-alteracao").val($(colunasAlteracao[6]).text());
-                $("#email-alteracao").val($(colunasAlteracao[7]).text());
-                $("#cpf-alteracao").val($(colunasAlteracao[8]).text());
-                $("#cnpj-alteracao").val($(colunasAlteracao[9]).text());
+                $("#endereco-alteracao").val($(colunasAlteracao[3]).text());
+                $("#telefone-alteracao").val($(colunasAlteracao[4]).text());
+                $("#celular-alteracao").val($(colunasAlteracao[5]).text());
+                $("#email-alteracao").val($(colunasAlteracao[6]).text());
+                $("#cpf-alteracao").val($(colunasAlteracao[7]).text());
+                $("#cnpj-alteracao").val($(colunasAlteracao[8]).text());
 
                 imagem_coluna_ativo = $(colunasAlteracao[10]).children('img');
                 if($(imagem_coluna_ativo[0]).attr('alt') == 'Ativo'){
