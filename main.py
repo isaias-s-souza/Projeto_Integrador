@@ -34,7 +34,7 @@ def index():
 @app.route('/conta_extrato')
 def conta_extrato():
     lista = conta_extrato_dao.listar()
-
+    
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect('/login?proxima=')
     else:

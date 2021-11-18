@@ -26,15 +26,16 @@ class ContaExtratoDao:
 
     def listar(self):
             cursor = self.__db.cursor()
-            SQL_BUSCA_CONTAS = "SELECT COD, NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, " \
-                               "IIF(ATIVO = 1, 'Ativo', 'Desativado') as ATIVO FROM CONTA_EXTRATO "
+            SQL_BUSCA_CONTAS = "SELECT COD, NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO " \
+                               "FROM CONTA_EXTRATO"
             cursor.execute(SQL_BUSCA_CONTAS)
             contas = traduz_contas(cursor.fetchall())
             return contas
 
 def traduz_contas(contas):
     def cria_conta_com_tupla(tupla):
-        return ContaExtrato(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], codigo=tupla[0])
+        return ContaExtrato(nome = tupla[1], descricao = tupla[2], agencia = tupla[3], 
+                            numero_conta = tupla[4], saldo_inicial = tupla[5], ativo = tupla[6], codigo=tupla[0])
     return list(map(cria_conta_com_tupla, contas))
 
 class FuncionarioDao:
