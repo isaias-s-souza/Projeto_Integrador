@@ -6,12 +6,19 @@ class ContaExtratoDao:
     def salvar(self, conta_extrato):
         cursor = self.__db.cursor()
 
-        if not(conta_extrato.get_codigo()):
+        if conta_extrato.get_codigo():
+            dados_conta_extrato_alteracao = [conta_extrato.get_nome(), conta_extrato.get_descricao(),
+                                            conta_extrato.agencia, conta_extrato.get_numero_conta(), 
+                                            conta_extrato.saldo_inicial, conta_extrato.ativo, conta_extrato.get_codigo()]
+            SQL_ALTERA_CONTA_EXTRATO = 'UPDATE CONTA_EXTRATO SET NOME = ?, DESCRICAO = ?, AGENCIA = ?, NUMERO_CONTA = ?,' \
+                                     'SALDO_INICIAL = ?, ATIVO = ? ' \
+                                     'WHERE COD = ?'    
+            cursor.execute(SQL_ALTERA_CONTA_EXTRATO, dados_conta_extrato_alteracao)
+        else:
             dados_conta_extrato_insercao = [conta_extrato.get_nome(), conta_extrato.get_descricao(),
-                                            conta_extrato.agencia,
-                                            conta_extrato.get_numero_conta(), conta_extrato.saldo_inicial,
+                                            conta_extrato.agencia, conta_extrato.get_numero_conta(), conta_extrato.saldo_inicial,
                                             conta_extrato.ativo]
-            SQL_CRIA_CONTA_EXTRATO = 'INSERT INTO CONTA_EXTRATO(NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO)' \
+            SQL_CRIA_CONTA_EXTRATO = 'INSERT INTO CONTA_EXTRATO(NOME, DESCRICAO, AGENCIA, NUMERO_CONTA, SALDO_INICIAL, ATIVO) ' \
                                      'VALUES(?, ?, ?, ?, ?, ?)'
             cursor.execute(SQL_CRIA_CONTA_EXTRATO, dados_conta_extrato_insercao)
         self.__db.commit()
@@ -37,7 +44,7 @@ class FuncionarioDao:
     def salvar(self, funcionario):
         cursor = self.__db.cursor()
 
-        if (funcionario.get_codigo()):
+        if funcionario.get_codigo():
             dados_funcionario_atualizacao = [funcionario.get_nome(), funcionario.get_endereco(), funcionario.telefone,
                                              funcionario.celular, funcionario.email, funcionario.get_cpf(),
                                              funcionario.login, funcionario.ativo, funcionario.get_codigo()]
@@ -115,7 +122,7 @@ class FornecedorDao:
                                              fornecedor.get_cnpj(), fornecedor.ativo, fornecedor.get_codigo()]
 
             SQL_ATUALIZA_FUNCIONARIO  = "UPDATE PESSOA SET NOME = ?, ENDERECO = ?,  TELEFONE = ?, CELULAR = ?," \
-                                        "EMAIL = ?, CPF = ?,CNPJ = ?,  ATIVO = ? " \
+                                        "EMAIL = ?, CPF = ?, CNPJ = ?,  ATIVO = ? " \
                                         "WHERE COD = ?"
 
             cursor.execute(SQL_ATUALIZA_FUNCIONARIO, dados_fornecedor_atualizacao)
@@ -170,16 +177,25 @@ class ClienteDao:
 
     def salvar(self, cliente):
         cursor = self.__db.cursor()
-        SQL_CRIA_PESSOA_CLIENTE  =   "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, " \
+        
+        if cliente.get_codigo():
+            dados_cliente_Atualizacao = [   cliente.get_nome(), cliente.get_endereco(), cliente.get_cpf(),
+                                            cliente.get_cnpj(), cliente.ativo, cliente.telefone, 
+                                            cliente.celular, cliente.email, cliente.get_codigo()]
+            SQL_ATUALIZA_PESSOA_CLIENTE  =  "UPDATE PESSOA SET NOME = ?, ENDERECO = ?, CPF = ?, CNPJ = ?, " \
+                                            "ATIVO = ?, TELEFONE = ?, CELULAR = ?, EMAIL = ? " \
+                                            "WHERE COD = ?"
+            cursor.execute(SQL_ATUALIZA_PESSOA_CLIENTE, dados_cliente_Atualizacao)
+        else:
+            SQL_CRIA_PESSOA_CLIENTE  =  "INSERT INTO PESSOA(NOME, ENDERECO, CPF, CNPJ, CLIENTE, FORNECEDOR, FUNCIONARIO, " \
                                         "ATIVO, TELEFONE, CELULAR, EMAIL) " \
-                                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        dados_cliente_Insercao = [   cliente.get_nome(), cliente.get_endereco(), cliente.get_cpf(),
-                                     cliente.get_cnpj(), cliente.cliente, cliente.fornecedor,
-                                     cliente.funcionario, cliente.ativo, cliente.telefone, 
-                                     cliente.celular, cliente.email]
-
-        if not(cliente.get_codigo()):
+                                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            dados_cliente_Insercao = [  cliente.get_nome(), cliente.get_endereco(), cliente.get_cpf(),
+                                        cliente.get_cnpj(), cliente.cliente, cliente.fornecedor,
+                                        cliente.funcionario, cliente.ativo, cliente.telefone, 
+                                        cliente.celular, cliente.email]
             cursor.execute(SQL_CRIA_PESSOA_CLIENTE, dados_cliente_Insercao)
+
         self.__db.commit()
         return cliente
 
@@ -204,12 +220,9 @@ def traduz_cliente(cliente):
 
         # self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, ativo, telefone,
         # celular, email, datacadastro, razaosocial, codigo=None
-        return Cliente(nome=tupla[1], cliente=tupla[5], fornecedor=tupla[6], funcionario=tupla[7],
-                           endereco=tupla[2], cpf=tupla[3], cnpj=tupla[4], ativo=tupla[8],
-                           telefone=tupla[9], celular=tupla[10], email=tupla[11], datacadastro=tupla[12],
-                           codigo=tupla[0])
+        return Cliente( nome=tupla[1], cliente=tupla[5], fornecedor=tupla[6], funcionario=tupla[7],
+                        endereco=tupla[2], cpf=tupla[3], cnpj=tupla[4], ativo=tupla[8],
+                        telefone=tupla[9], celular=tupla[10], email=tupla[11], datacadastro=tupla[12],
+                        codigo=tupla[0])
 
     return list(map(cria_cliente_com_tupla, cliente))
-
-
-
