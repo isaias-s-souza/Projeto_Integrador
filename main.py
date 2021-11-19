@@ -260,8 +260,11 @@ def autenticar():
             proxima_pagina = request.form['proxima']
 
             return redirect('/{}'.format(proxima_pagina))
+        else:
+            flash('Senha Inválida, tente novamente!')
+            return redirect('/login')    
     else:
-        flash('Usuário ou Senha Inválidos, insira os dados novamente!')
+        flash('Usuário não cadastro, tente novamente!')
         return redirect('/login')
 
 
