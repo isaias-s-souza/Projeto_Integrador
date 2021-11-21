@@ -16,7 +16,7 @@ DB = pyodbc.connect('Driver={SQL Server};' +
                       'Database=' + config['CONFIGURACAO_GERAL']['BANCODEDADOS'] + ';' +
                       'UID=' + config['CONFIGURACAO_GERAL']['USUARIO'] + ';' +
                       'PWD=' + config['CONFIGURACAO_GERAL']['SENHA'] + ';' +
-                      'Encrypt=yes;' + 
+                      config['CONFIGURACAO_GERAL']['MODOENCRIPT'] + 
                       'Trusted_Connection=no;' + 
                       'Connection Timeout=30;')
 
