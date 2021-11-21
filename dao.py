@@ -10,9 +10,9 @@ class ContaExtratoDao:
             dados_conta_extrato_alteracao = [conta_extrato.get_nome(), conta_extrato.get_descricao(),
                                             conta_extrato.agencia, conta_extrato.get_numero_conta(), 
                                             conta_extrato.saldo_inicial, conta_extrato.ativo, conta_extrato.get_codigo()]
-            SQL_ALTERA_CONTA_EXTRATO = 'UPDATE CONTA_EXTRATO SET NOME = ?, DESCRICAO = ?, AGENCIA = ?, NUMERO_CONTA = ?,' \
-                                     'SALDO_INICIAL = ?, ATIVO = ? ' \
-                                     'WHERE COD = ?'    
+            SQL_ALTERA_CONTA_EXTRATO =  'UPDATE CONTA_EXTRATO SET NOME = ?, DESCRICAO = ?, AGENCIA = ?, NUMERO_CONTA = ?,' \
+                                        'SALDO_INICIAL = ?, ATIVO = ? ' \
+                                        'WHERE COD = ?'    
             cursor.execute(SQL_ALTERA_CONTA_EXTRATO, dados_conta_extrato_alteracao)
         else:
             dados_conta_extrato_insercao = [conta_extrato.get_nome(), conta_extrato.get_descricao(),
@@ -86,12 +86,14 @@ class FuncionarioDao:
         cursor.execute(SQL_BUSCA_FUNCIONARIO_LOGIN, login)
         tupla = cursor.fetchone()
 
+        if tupla is not None:
         # (self, nome, cliente, fornecedor, funcionario, endereco, cpf, cnpj, login, ativo, telefone,
         #         celular, email, datacadastro, razaosocial, codigo=None, senha='')
-        return Funcionario(codigo=tupla[0], login=tupla[1], senha=tupla[2], nome='', cliente=False,
-                           fornecedor=False, funcionario=True, endereco='', cpf='', cnpj='',
-                           ativo=True, telefone='', celular='', email='', datacadastro='')
-
+            return Funcionario(codigo=tupla[0], login=tupla[1], senha=tupla[2], nome='', cliente=False,
+                            fornecedor=False, funcionario=True, endereco='', cpf='', cnpj='',
+                            ativo=True, telefone='', celular='', email='', datacadastro='')
+        else: 
+            None
 def traduz_funcionarios(funcionarios):
     def cria_funcionario_com_tupla(tupla):
         #  0     1       2      3     4      5      
