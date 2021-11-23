@@ -262,6 +262,13 @@ def conta_a_receber():
     else:
         return render_template('conta_a_receber.html')
 
+@app.route('/extrato_bancario')
+def extrato_bancario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect('/login?proxima=')
+    else:
+        return render_template('extrato_bancario.html')
+
 @app.route('/login')
 def login():
     proxima = request.args.get('proxima')
