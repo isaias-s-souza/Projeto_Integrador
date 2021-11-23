@@ -241,6 +241,26 @@ def alterar_cliente():
     lista = cliente_dao.listar()
     return render_template('cliente.html', clientes=lista)
 
+#CONTA A PAGAR
+@app.route('/conta_a_pagar')
+def conta_a_pagar():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect('/login?proxima=')
+    else:
+        return render_template('conta_a_pagar.html')
+
+@app.route('/criar_conta_a_pagar', methods=['POST', ])
+def criar_conta_a_pagar():
+    return render_template('conta_a_pagar.html')
+
+
+#CONTA A RECEBER
+@app.route('/conta_a_receber')
+def conta_a_receber():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect('/login?proxima=')
+    else:
+        return render_template('conta_a_receber.html')
 
 @app.route('/login')
 def login():

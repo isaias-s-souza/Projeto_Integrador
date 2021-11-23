@@ -1,0 +1,178 @@
+{% extends "template.html" %}
+{% block conteudo %}
+             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="/">Menu</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                             <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle dropbtn"  id="#navbarDropdownMenuLink" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                   onclick="myFunction()">Cadastro</a>
+                                <div class="dropdown-menu dropdown-menu-dark dropdown-content"
+                                     aria-labelledby="navbarDropdownMenuLink"
+                                     id="myDropdown">
+                                    <a class="dropdown-item" href="/conta_extrato">Conta</a>
+                                    <a class="dropdown-item" href="/cliente">Cliente</a>
+                                    <a class="dropdown-item" href="/fornecedor">Fornecedor</a>
+                                    <a class="dropdown-item" href="/funcionario">Funcionário</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/conta_a_pagar">Contas a Pagar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/conta_a_receber">Contas a Receber</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/extrato_bancario">Extratos Bancários</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Trocas de Cheques</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Sair</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            
+            <!--CADASTRO -->
+            </br> 
+            <h2>Lançamento de Conta a Receber</h2> 
+            </br> 
+            
+                      
+            <form action="/criar_conta_a_receber"  method="post">
+                <fieldset>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Cliente</span>
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <img src="{{url_for('static', filename='images/search.svg')}}"  width="25" height="25">
+                        </button>
+                        
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    
+                                    
+                                    <input type="text" class="form-control" placeholder="Busca por Cliente..." >
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Selecionar</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                    <div class="list-group">
+                                        <button  type="button" class="list-group-item list-group-item-action active" aria-current="true">
+                                          Maria Aparecida da Silva
+                                        </button>
+                                        <button type="button" class="list-group-item list-group-item-action">Jose Avelar</button>
+                                        <button type="button" class="list-group-item list-group-item-action">João Cezar</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                        <span class="input-group-text">Valor</span>
+                        <input type="number" class="form-control" placeholder="R$00,00" >
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Cond.Pagamento
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">30 DDL</a></li>
+                            <li><a class="dropdown-item" href="#">30/60 DDL</a></li>
+                            <li><a class="dropdown-item" href="#">30/60/90 DDL</a></li>
+                            </ul>
+                    </div>
+                        <span class="input-group-text">Data Emissão</span>
+                        <input type="date" class="form-control" placeholder="DD/MM/AAAA" >
+                       
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Documento</span>
+                        <input type="text" class="form-control" >
+                        <span class="input-group-text">Histórico</span>
+                        <input type="text" class="form-control">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Categoria
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="#">Gasto Fixo</a></li>
+                              <li><a class="dropdown-item" href="#">Gasto Eventual</a></li>
+                            </ul>
+                        </div>
+                        <span class="input-group-text"></span>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Subcategoria  
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="#">Produto</a></li>
+                              <li><a class="dropdown-item" href="#">Serviço</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </fieldset>
+            </form>
+            <button type="button" class="btn btn-primary">
+                Salvar
+            </button>
+            <button type="button" class="btn btn-success">
+                Novo
+            </button> 
+            </br>
+            </br>
+            <table class="table table-secondary table-sm table-responsive table-striped table-bordered">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Ações</th>
+                        <th>Doc.</th>
+                        <th>Cliente</th>
+                        <th>Vencimento</th>
+                        <th>Parcela</th>
+                        <th>Valor</th>
+                        <th>Data Emissão</th>
+                        <th>Histórico</th>
+                        <th>Categoria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                       <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal">
+                        Alterar
+                        </button>
+                       </td>
+                       <td>100</td>
+                       <td>Maria Aparecida da Silva</td>
+                       <td>01/11/2021</td>
+                       <td>01/03</td>
+                       <td>236,50</td>
+                       <td>01/10/2021</td>
+                       <td>Realização de Serviço X</td>
+                       <td>Receita Fixa</td>
+                   </tr>
+                   <tr>
+                    <td>
+                     <button type="button" class="btn btn-primary" data-bs-toggle="modal">
+                     Alterar
+                     </button>
+                    </td>
+                    <td>100</td>
+                    <td>Maria Aparecida da Silva</td>
+                    <td>01/12/2021</td>
+                    <td>01/02</td>
+                    <td>236,50</td>
+                    <td>01/10/2021</td>
+                    <td>Realização de Serviço X</td>
+                    <td>Receita Fixa</td>
+                </tr>
+                </tbody>
+            </table>
+{%endblock %}
