@@ -81,11 +81,11 @@
                         
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Cond.Pag</button>
+                            {% for dia in diasparcela %}
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">X</a></li>
-                              <li><a class="dropdown-item" href="#">Y</a></li>
-                              <li><a class="dropdown-item" href="#">Z</a></li>
+                              <li><a class="dropdown-item" href="#">dia[0]</a></li>
                             </ul>
+                            {% endfor %}
                         </div>
                             
                         <span class="input-group-text">Data Emissão</span>
