@@ -275,9 +275,9 @@ class LancamentoDao():
                                         'CONDICAO_PAGTO.DESCRICAO, CONDICAO_PAGTO.PARCELAS,' \
                                         'LANCAMENTO.DATAEMISSAO, LANCAMENTO.DATAVENCIMENTO,' \
                                         'SUBCATEGORIA.DESCRICAO FROM LANCAMENTO' \
-                                        'INNER JOIN PESSOA		  ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD' \
-                                        'INNER JOIN CONDICAO_PAGTO ON LANCAMENTO.COD_CONDICAO_PAGTO	   = CONDICAO_PAGTO.COD' \
-                                        'INNER JOIN SUBCATEGORIA	  ON LANCAMENTO.COD_SUBCATEGORIA	   = SUBCATEGORIA.COD'
+                                        'INNER JOIN PESSOA		    ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD' \
+                                        'INNER JOIN CONDICAO_PAGTO  ON LANCAMENTO.COD_CONDICAO_PAGTO	 = CONDICAO_PAGTO.COD' \
+                                        'INNER JOIN SUBCATEGORIA	ON LANCAMENTO.COD_SUBCATEGORIA	     = SUBCATEGORIA.COD'
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_LANCAMENTO)
         lancamento = traduz_lancamento(cursor.fetchall())
