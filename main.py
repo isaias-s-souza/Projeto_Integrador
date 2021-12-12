@@ -214,8 +214,8 @@ def criar_cliente():
 
     cliente_dao.salvar(novo_cliente)
     lista = cliente_dao.listar()
-    return render_template('cliente.html', clientes=lista)
 
+    return render_template('cliente.html', clientes=lista)     
 
 @app.route('/alterar_cliente', methods=['POST', ])
 def alterar_cliente():
@@ -267,7 +267,13 @@ def extrato_bancario():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect('/login?proxima=')
     else:
-        return render_template('extrato_bancario.html')
+        contas = conta_extrato_dao.listar()
+        #Tranforma em uma lista no seguinte padrão NOME CONTA - COD BANCO
+        relacaoNomeCodConta= list()
+        for conta in contas:
+            relacaoNomeCodConta.append({'DESCRICAO' : conta.get_nome() + ' - ' + str(conta.get_codigo()), 'CODIGO': str(conta.get_codigo())})
+
+        return render_template('extrato_bancario.html', relacaoContasConsulta=relacaoNomeCodConta)
 
 @app.route('/login')
 def login():
