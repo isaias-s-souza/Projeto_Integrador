@@ -81,11 +81,13 @@
                         
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Cond.Pag</button>
-                            {% for dia in diasparcela %}
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">dia[0]</a></li>
-                            </ul>
+                            
+                            <ul class="dropdown-menu">Cond.Pag
+                            {% for descricao in relacaoCondPagts %}
+                              <li value="{{descricao[COD_CONDICAO_PAGTO]}}" >{{descricao['PARCELA']}}</li>
                             {% endfor %}
+                            </ul>
+                            
                         </div>
                             
                         <span class="input-group-text">Data Emissão</span>

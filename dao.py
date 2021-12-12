@@ -1,4 +1,4 @@
-from models import Cliente, Funcionario, ContaExtrato, Fornecedor
+from models import Cliente, Funcionario, ContaExtrato, Fornecedor,Lancamento
 class ContaExtratoDao:
     def __init__(self, db):
         self.__db = db
@@ -229,3 +229,66 @@ def traduz_cliente(cliente):
                         codigo=tupla[0])
 
     return list(map(cria_cliente_com_tupla, cliente))
+
+'''self, valor, documento, historico_observacao,
+            cod_cond_pagamento, parcela,data_emissao, data_vencimento, 
+            cod_subcategoria, cod_pessoa='',valor_final='',cod_funcionario='', cod_conta_extrato ='', 
+            juros='', desconto='',data_pagamento='',data_efetivacao='',cod_form_pagamento='', 
+            nivel_negociacao='',codigo=None '''
+
+class LancamentoDao():
+    def __init__(self, db):
+        self.__db = db
+
+    def salvar(self, lancamento):
+        cursor = self.__db.cursor()
+        
+        if lancamento.codigo:
+            dados_lancamento_Atualizacao = [lancamento.valor, lancamento.documento, lancamento.historico_observacao,
+                                            lancamento.cod_cond_pagamento, lancamento.parcela, lancamento.data_emissao, 
+                                            lancamento.data_vencimento, lancamento.cod_subcategoria, lancamento.cod_pessoa,
+                                            lancamento.codigo]
+
+            SQL_ATUALIZA_LANCAMENTO  =  "UPDATE LANCAMENTO SET  VALOR = ?, DOCUMENTO = ?, HISTORICO_OBSERVACAO = ? ," \
+                                        "COD_CONDICAO_PAGTO = ?, PARCELA = ?, DATAEMISSAO = ?, DATAVENCIMENTO = ? ," \
+                                        "COD_SUBCATEGORIA = ? , COD_CLIENTE_FORNECEDOR = ?" \
+                                        "WHERE COD = ?"
+            cursor.execute(SQL_ATUALIZA_LANCAMENTO, dados_lancamento_Atualizacao)
+        else:
+            SQL_CRIA_LANCAMENTO  =  "INSERT INTO LANCAMENTO(VALOR, DOCUMENTO, HISTORICO_OBSERVACAO," \
+                                    "COD_CONDICAO_PAGTO, PARCELA, DATAEMISSAO, DATAVENCIMENTO, COD_SUBCATEGORIA," \
+                                    "COD_CLIENTE_FORNECEDOR" \
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+
+            dados_lancamento_Insercao = [lancamento.valor, lancamento.documento, lancamento.historico_observacao,
+                                         lancamento.cod_cond_pagamento, lancamento.parcela, lancamento.data_emissao,
+                                         lancamento.data_vencimento, lancamento.cod_subcategoria, lancamento.cod_pessoa]
+
+            cursor.execute(SQL_CRIA_LANCAMENTO, dados_lancamento_Insercao)
+
+        self.__db.commit()
+        return lancamento
+
+    def listar(self):
+        SQL_BUSCA_LANCAMENTO =    '  SELECT LANCAMENTO.COD, PESSOA.NOME, LANCAMENTO.VALOR,' \
+                                        'LANCAMENTO.DOCUMENTO, LANCAMENTO.HISTORICO_OBSERVACAO,' \
+                                        'CONDICAO_PAGTO.DESCRICAO, CONDICAO_PAGTO.PARCELAS,' \
+                                        'LANCAMENTO.DATAEMISSAO, LANCAMENTO.DATAVENCIMENTO,' \
+                                        'SUBCATEGORIA.DESCRICAO FROM LANCAMENTO' \
+                                        'INNER JOIN PESSOA		    ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD' \
+                                        'INNER JOIN CONDICAO_PAGTO  ON LANCAMENTO.COD_CONDICAO_PAGTO	 = CONDICAO_PAGTO.COD' \
+                                        'INNER JOIN SUBCATEGORIA	ON LANCAMENTO.COD_SUBCATEGORIA	     = SUBCATEGORIA.COD'
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_LANCAMENTO)
+        lancamento = traduz_lancamento(cursor.fetchall())
+        return lancamento
+
+
+def traduz_lancamento(lancamento):
+    def cria_lancamento_com_tupla(tupla):
+       
+        return Lancamento( cod_pessoa=tupla[2], valor=tupla[4], documento=tupla[8], historico_observacao=tupla[9],
+                            cod_cond_pagamento=tupla[10], parcela=tupla[11], data_emissao=tupla[12], 
+                            data_vencimento=tupla[13],cod_subcategoria=tupla[17], codigo=tupla[0])
+
+    return list(map(cria_lancamento_com_tupla, lancamento))

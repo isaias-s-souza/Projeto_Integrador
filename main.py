@@ -2,8 +2,8 @@ import pyodbc
 import configparser
 from flask import Flask, render_template, request, redirect, session, flash
 
-from dao import ContaExtratoDao, FuncionarioDao, FornecedorDao, ClienteDao
-from models import Cliente, Funcionario, ContaExtrato, Fornecedor
+from dao import ContaExtratoDao, FuncionarioDao, FornecedorDao, ClienteDao, LancamentoDao
+from models import Cliente, Funcionario, ContaExtrato, Fornecedor, Lancamento
 
 app = Flask(__name__)
 app.secret_key = 'SISTEMAFINANCEIRO'
@@ -23,7 +23,8 @@ DB = pyodbc.connect('Driver={SQL Server};' +
 conta_extrato_dao   = ContaExtratoDao(DB)
 funcionario_dao     = FuncionarioDao(DB)
 fornecedor_dao      = FornecedorDao(DB)
-cliente_dao         = ClienteDao(DB)              
+cliente_dao         = ClienteDao(DB)  
+lancamento_dao      = LancamentoDao(DB)            
 
 
 @app.route('/')
@@ -242,16 +243,43 @@ def alterar_cliente():
     return render_template('cliente.html', clientes=lista)
 
 #CONTA A PAGAR
-@app.route('/conta_a_pagar')
+@app.route('/conta_a_pagar', methods=['POST', ])
 def conta_a_pagar():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect('/login?proxima=')
     else:
-        return render_template('conta_a_pagar.html')
+        condPagts = lancamento_dao.listar()
+        relacaoCondPagtsCodLancamento = list()
+        for descricao in condPagts:
+            relacaoFormPagCodLancamento.append({'COD_CONDICAO_PAGTO' : str(descricao.cod_cond_pagamento) +' - ' ,'PARCELA' : descricao.parcela+' - '})
+
+        return render_template('conta_a_pagar.html', relacaoCondPagts=relacaoCondPagtsCodLancamento)
+
 
 @app.route('/criar_conta_a_pagar', methods=['POST', ])
 def criar_conta_a_pagar():
-    return render_template('conta_a_pagar.html')
+
+    id                      = request.form['id'] 
+    fornecedor              = request.form['fornecedor']
+    valor                   = request.form['valor']
+    documento               = request.form['documento']
+    historico_observacao    = request.form['historico_observacao']
+    cond_pagts              = request.form['cond_pagts']
+    parcela                 = request.form['parcela']
+    data_emissao            = request.form['data_emissao']
+    data_vencimento         = request.form['data_vencimento']
+    cod_subcategoria        = request.form['cod_subcategoria']
+
+    nova_conta_a_pagar = Lancamento(valor=valor, documento=documento, historico_observacao=historico_observacao,
+                                    cod_cond_pagamento=cond_pagts, parcela=parcela,data_emissao=data_emissao,
+                                    data_vencimento=data_vencimento,cod_subcategoria=cod_subcategoria,cod_pessoa=fornecedor,
+                                    valor_final='',cod_funcionario='', cod_conta_extrato='',juros='',desconto='',data_pagamento='',
+                                    data_efetivacao='',cod_form_pagamento='',nivel_negociacao='',codigo=id)
+    
+    lancamento_dao.salvar(nova_conta_a_pagar)
+    lista = lancamento_dao.listar()
+
+    return render_template('conta_a_pagar.html', relacaoCondPagts=lista)
 
 
 #CONTA A RECEBER
