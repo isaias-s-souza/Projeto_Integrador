@@ -235,7 +235,7 @@ def traduz_cliente(cliente):
 class LancamentoDao():
     def __init__(self, db):
         self.__db = db
-
+    
     def salvar(self, lancamento):
         cursor = self.__db.cursor()
         
@@ -243,18 +243,18 @@ class LancamentoDao():
             dados_lancamento_Atualizacao = [lancamento.valor, lancamento.documento, lancamento.historico_observacao,
                                             lancamento.cod_cond_pagamento, lancamento.parcela, lancamento.data_emissao, 
                                             lancamento.data_vencimento, lancamento.cod_subcategoria, lancamento.cod_pessoa,
-                                            lancamento.codigo]
+                                            lancamento.debitocredito, lancamento.codigo]
 
             SQL_ATUALIZA_LANCAMENTO  =  "UPDATE LANCAMENTO SET  VALOR = ?, DOCUMENTO = ?, HISTORICO_OBSERVACAO = ? ," \
                                         "COD_CONDICAO_PAGTO = ?, PARCELA = ?, DATAEMISSAO = ?, DATAVENCIMENTO = ? ," \
-                                        "COD_SUBCATEGORIA = ? , COD_CLIENTE_FORNECEDOR = ?" \
+                                        "COD_SUBCATEGORIA = ? , COD_CLIENTE_FORNECEDOR = ?, DEBITOCREDITO = ?" \
                                         "WHERE COD = ?"
             cursor.execute(SQL_ATUALIZA_LANCAMENTO, dados_lancamento_Atualizacao)
         else:
             SQL_CRIA_LANCAMENTO  =  "INSERT INTO LANCAMENTO(VALOR, DOCUMENTO, HISTORICO_OBSERVACAO," \
                                     "COD_CONDICAO_PAGTO, PARCELA, DATAEMISSAO, DATAVENCIMENTO, COD_SUBCATEGORIA," \
-                                    "COD_CLIENTE_FORNECEDOR" \
-                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                                    "COD_CLIENTE_FORNECEDOR, DEBITOCREDITO" \
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
             dados_lancamento_Insercao = [lancamento.valor, lancamento.documento, lancamento.historico_observacao,
                                          lancamento.cod_cond_pagamento, lancamento.parcela, lancamento.data_emissao,
@@ -281,7 +281,43 @@ class LancamentoDao():
         lancamento = traduz_lancamento(cursor.fetchall())
         return lancamento
 
+    #Tratativas do para o EXTRATO BANCARIO
+    global SQL_BUSCA_LANCAMENTO_EXTRATO  
+    SQL_BUSCA_LANCAMENTO_EXTRATO = 'SELECT LANCAMENTO.COD, LANCAMENTO.DOCUMENTO, LANCAMENTO.VALOR, ' \
+                                   'PESSOA.NOME, LANCAMENTO.DATAEMISSAO, LANCAMENTO.DEBITOCREDITO, ' \
+                                   'LANCAMENTO.PARCELA, LANCAMENTO.HISTORICO_OBSERVACAO ' \
+                                   'FROM LANCAMENTO ' \
+                                   'INNER JOIN PESSOA ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD ' \
+                                   'WHERE COD_CONTA_EXTRATO = ? '
 
+    def listar_extrato_efetivados(self, id_conta, data_inicio_pesquisa, data_fim_pesquisa):
+        SQL_BUSCA_LANCAMENTO_EXTRATO_EFETIVADO =    SQL_BUSCA_LANCAMENTO_EXTRATO + \
+                                                    'AND DATAEFETIVACAO IS NOT NULL AND ' \
+                                                    'DATAEFETIVACAO >= ? AND DATAEFETIVACAO <= ? '
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_LANCAMENTO_EXTRATO_EFETIVADO, [id_conta, data_inicio_pesquisa, data_fim_pesquisa])
+        return cursor.fetchall()
+    
+    def listar_extrato_nao_efetivados(self, id_conta):
+        cursor = self.__db.cursor() 
+        cursor.execute(SQL_BUSCA_LANCAMENTO_EXTRATO, id_conta)
+        return cursor.fetchall()
+    
+    def busca_saldos_conta(self, id_conta, data_inicio_pesquisa, data_fim_pesquisa):
+        SQL_BUSCA_SALDOS_EXTRATO =  'SELECT ' \
+                                    '(SELECT ISNULL(SUM(VALOR), 0) ' \
+                                    'FROM LANCAMENTO ' \
+                                    'WHERE COD_CONTA_EXTRATO = ? AND DATAEFETIVACAO < ?), ' \
+                                    '(SELECT ISNULL(SUM(VALOR), 0) AS  ' \
+                                    'FROM LANCAMENTO ' \
+                                    'WHERE COD_CONTA_EXTRATO = ? AND DATAEFETIVACAO <= ?), ' \
+                                    '(SELECT ISNULL(SUM(VALOR), 0) AS SALDO_COM_NAO_EFETIVADO ' \
+                                    'FROM COD_CONTA_EXTRATO = ?) '
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_SALDOS_EXTRATO, [id_conta, data_inicio_pesquisa, id_conta, data_fim_pesquisa, id_conta])
+        saldos = cursor.fetchall()
+        return {'SALDO_ANTERIOR' : saldos[0], 'SALDO_EFETIVADO' : saldos[1], 'SALDO_COM_NAO_EFETIVADO' : saldos[2]}
+    
 def traduz_lancamento(lancamento):
     def cria_lancamento_com_tupla(tupla):
     
