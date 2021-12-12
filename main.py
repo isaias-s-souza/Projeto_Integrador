@@ -251,7 +251,7 @@ def conta_a_pagar():
         condPagts = lancamento_dao.listar()
         relacaoCondPagtsCodLancamento = list()
         for descricao in condPagts:
-            relacaoCondPagtsCodLancamento.append({'CONDICAO_PAGTO.COD_CONDICAO_PAGTO' : str(descricao.cod_cond_pagamento), + ' - '  'CONDICAO_PAGTO.PARCELA' : descricao.parcela})
+            relacaoCondPagtsCodLancamento.append({'CONDICAO_PAGTO.COD_CONDICAO_PAGTO' : str(descricao.cod_cond_pagamento), 'CONDICAO_PAGTO.PARCELA' : descricao.parcela})
 
         return render_template('conta_a_pagar.html', relacaoCondPagts=relacaoCondPagtsCodLancamento)
 
