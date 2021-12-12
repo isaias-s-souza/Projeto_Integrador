@@ -50,73 +50,69 @@
                       
             <form action="/criar_conta_a_pagar"  method="post">
                 <fieldset>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Fornecedor</span>
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <img src="{{url_for('static', filename='images/search.svg')}}"  width="25" height="25">
-                        </button>
-                        
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <input type="text" class="form-control" placeholder="Busca por Fornecedor..." >    
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Selecionar</button>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
-                                    <div class="list-group">
-                                        <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-                                          MedX
-                                        </button>
-                                        <button type="button" class="list-group-item list-group-item-action">Medial</button>
-                                        <button type="button" class="list-group-item list-group-item-action">HospMed</button>
-                                      </div>
+                <div class="input-group mb-3">
+                    <input style="max-width: 75px;" type="number"  placeholder="cod"  class="form-control" disabled>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <img src="{{url_for('static', filename='images/search.svg')}}"  width="25" height="25">
+                    </button>
+                    <span class="input-group-text">Fornecedor</span>
+                    <input type="text" style="min-width: 500px;" class="form-control">
+                                                
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <input type="search" class="form-control" placeholder="Busca por Fornecedor..." >    
+                                </div>
+                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary">Selecionar</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                                <div class="list-group">
+                                    
                                 </div>
                             </div>
-                    </div>
+                        </div>
+                        </div>
+                        
                         <span class="input-group-text">Valor</span>
-                        <input type="number" class="form-control" placeholder="R$00,00" >
+                        <input style="min-width: 200px;" type="number" class="form-control" placeholder="R$00,00" >           
+                        
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Cond.Pagamento
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">30 DDL</a></li>
-                            <li><a class="dropdown-item" href="#">30/60 DDL</a></li>
-                            <li><a class="dropdown-item" href="#">30/60/90 DDL</a></li>
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Cond.Pag</button>
+                            {% for dia in diasparcela %}
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">dia[0]</a></li>
                             </ul>
-                    </div>
+                            {% endfor %}
+                        </div>
+                            
                         <span class="input-group-text">Data Emissão</span>
-                        <input type="date" class="form-control" placeholder="DD/MM/AAAA" >
+                        <input style="max-width: 170px;" type="date" class="form-control" placeholder="DD/MM/AAAA" >
                        
-                    <div class="input-group mb-3">
+                        
                         <span class="input-group-text">Documento</span>
-                        <input type="text" class="form-control" >
+                        <input style="max-width: 70px;" type="text" class="form-control" >
                         <span class="input-group-text">Histórico</span>
                         <input type="text" class="form-control">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Categoria
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                              <li><a class="dropdown-item" href="#">Gasto Fixo</a></li>
-                              <li><a class="dropdown-item" href="#">Gasto Eventual</a></li>
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Categoria</button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">X</a></li>
+                              <li><a class="dropdown-item" href="#">Y</a></li>
+                              <li><a class="dropdown-item" href="#">Z</a></li>
                             </ul>
                         </div>
-                        <span class="input-group-text"></span>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Subcategoria  
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                              <li><a class="dropdown-item" href="#">Produto</a></li>
-                              <li><a class="dropdown-item" href="#">Serviço</a></li>
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Subcategoria</button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">X</a></li>
+                              <li><a class="dropdown-item" href="#">Y</a></li>
+                              <li><a class="dropdown-item" href="#">Z</a></li>
                             </ul>
-                        </div>
-                    </div>
-                    
+                        </div>  
+                </div>   
                 </fieldset>
             </form>
             <button type="button" class="btn btn-primary">

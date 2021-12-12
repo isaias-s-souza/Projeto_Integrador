@@ -232,3 +232,183 @@ class ContaExtrato:
     @ativo.setter
     def ativo(self, ativo):
         self.__ativo = ativo
+
+
+class Lancamento():
+    def __init__(self,cod_pessoa, cod_funcionario, cod_conta_extrato,
+                 valor, juros, desconto, valor_final, documento, historico_observacao,
+                 cod_cond_pagamento, parcela,data_emissao, data_vencimento, data_pagamento,
+                 data_efetivacao, cod_form_pagamento, cod_subcategoria, nivel_negociacao,codigo=None ):
+
+        self.__codigo               = codigo
+        self.__cod_pessoa           = cod_pessoa
+        self.__cod_funcionario      = cod_funcionario
+        self.__cod_conta_extrato    = cod_conta_extrato
+        self.__valor                = valor
+        self.__juros                = juros
+        self.__desconto             = desconto
+        self.__valor_final          = valor_final
+        self.__documento            = documento
+        self.__historico_observacao = historico_observacao
+        self.__cod_cond_pagamento   = cod_cond_pagamento
+        self.__parcela              = parcela
+        self.__data_emissao         = data_emissao
+        self.__data_vencimento      = data_vencimento
+        self.__data_pagamento       = data_pagamento
+        self.__data_efetivacao      = data_efetivacao
+        self.__cod_form_pagamento   = cod_form_pagamento
+        self.__cod_subcategoria     = cod_subcategoria
+        self.__nivel_negociacao     = nivel_negociacao
+
+
+    @property
+    def codigo(self):
+        return self.__codigo
+    
+    @codigo.setter
+    def codigo(self, codigo):
+        self.__codigo = codigo
+
+    @property
+    def cod_pessoa(self):
+        return self.__cod_pessoa
+
+    @cod_pessoa.setter
+    def cod_pessoa(self, cod_pessoa):
+        self.__cod_pessoa = cod_pessoa
+
+    @property
+    def cod_funcionario(self):
+        return self.__cod_funcionario
+    
+    @cod_funcionario.setter
+    def cod_funcionario(self, cod_funcionario):
+        self.__cod_funcionario = cod_funcionario
+    
+    @property
+    def cod_conta_extrato(self):
+       return self.__cod_conta_extrato
+
+    @cod_conta_extrato.setter
+    def cod_conta_extrato(self, cod_conta_extrato):
+        self.__cod_conta_extrato = cod_conta_extrato
+    
+    @property
+    def valor(self):
+        return self.__valor
+
+    @valor.setter
+    def valor(self, valor):
+        self.__valor = valor
+
+    @property
+    def juros(self):
+        return self.__juros
+
+    @juros.setter
+    def juros(self, juros):
+        self.__juros = juros
+
+    @property
+    def desconto(self):
+        return self.__desconto
+
+    @desconto.setter
+    def desconto(self, desconto):
+        self.__desconto = desconto
+
+    @property
+    def valor_final(self):
+        return self.__valor_final
+    
+    @valor_final.setter
+    def valor_final(self, valor_final):
+        self.__valor_final = valor_final
+
+    @property
+    def documento(self):
+        return self.__documento
+
+    @documento.setter
+    def documento(self, documento):
+        self.__documento = documento
+    
+    @property
+    def historico_observacao(self):
+        return self.__historico_observacao
+
+    @historico_observacao.setter
+    def historico_observacao(self, historico_observacao):
+        self.__historico_observacao = historico_observacao
+
+    @property
+    def cod_cond_pagamento(self):
+        return self.__cod_cond_pagamento
+    
+    @cod_cond_pagamento.setter
+    def cod_cond_pagamento(self, cod_cond_pagamento):
+        self.__cod_cond_pagamento = cod_cond_pagamento
+
+    @property
+    def parcela(self):
+        return self.__parcela
+
+    @parcela.setter
+    def parcela(self, parcela):
+        self.__parcela = parcela
+    
+    @property
+    def data_emissao(self):
+        return self.__data_emissao
+
+    @data_emissao.setter
+    def data_emissao(self, data_emissao):
+        self.__data_emissao = data_emissao
+    
+    @property
+    def data_vencimento(self):
+        return self.__data_vencimento
+    
+    @data_vencimento.setter
+    def data_vencimento(self, data_vencimento):
+        self.__data_vencimento = data_vencimento
+
+    @property
+    def data_pagamento(self):
+        return self.__data_pagamento
+    
+    @data_pagamento.setter
+    def data_pagamento(self, data_pagamento):
+        self.__data_pagamento = data_pagamento
+
+    @property
+    def data_efetivacao(self):
+        return self.__data_efetivacao
+    
+    @data_efetivacao.setter
+    def data_efetivacao(self, data_efetivacao):
+        self.__data_efetivacao = data_efetivacao
+    
+    @property
+    def cod_form_pagamento(self):
+        return self.__cod_form_pagamento
+
+    @cod_form_pagamento.setter
+    def cod_form_pagamento(self, cod_form_pagamento):
+        self.__cod_form_pagamento = cod_form_pagamento
+    
+    @property
+    def cod_subcategoria(self):
+        return self.__cod_subcategoria
+
+    @cod_subcategoria.setter
+    def cod_subcategoria(self, cod_subcategoria):
+        self.__cod_subcategoria = cod_subcategoria
+
+    @property
+    def nivel_negociacao(self):
+        return self.__nivel_negociacao
+    
+    @nivel_negociacao.setter
+    def nivel_negociacao(self, nivel_negociacao):
+        self.__nivel_negociacao = nivel_negociacao
