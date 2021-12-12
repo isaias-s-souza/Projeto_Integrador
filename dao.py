@@ -230,7 +230,11 @@ def traduz_cliente(cliente):
 
     return list(map(cria_cliente_com_tupla, cliente))
 
-
+'''self, valor, documento, historico_observacao,
+            cod_cond_pagamento, parcela,data_emissao, data_vencimento, 
+            cod_subcategoria, cod_pessoa='',valor_final='',cod_funcionario='', cod_conta_extrato ='', 
+            juros='', desconto='',data_pagamento='',data_efetivacao='',cod_form_pagamento='', 
+            nivel_negociacao='',codigo=None '''
 
 class LancamentoDao():
     def __init__(self, db):
@@ -266,16 +270,14 @@ class LancamentoDao():
         return lancamento
 
     def listar(self):
-        SQL_BUSCA_LANCAMENTO =  " SELECT LANCAMENTO.COD, PESSOA.NOME, LANCAMENTO.VALOR," \
-                                " LANCAMENTO.DOCUMENTO, LANCAMENTO.HISTORICO_OBSERVACAO," \
-                                " CONDICAO_PAGTO.DESCRICAO, CONDICAO_PAGTO.PARCELAS," \
-                                " LANCAMENTO.DATAEMISSAO, LANCAMENTO.DATAVENCIMENTO," \
-                                " SUBCATEGORIA.DESCRICAO " \
-                                " FROM LANCAMENTO" \
-                                " INNER JOIN PESSOA ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD" \
-                                " INNER JOIN CONDICAO_PAGTO  ON LANCAMENTO.COD_CONDICAO_PAGTO	 = CONDICAO_PAGTO.COD" \
-                                " INNER JOIN SUBCATEGORIA	ON LANCAMENTO.COD_SUBCATEGORIA	     = SUBCATEGORIA.COD"
-                                        
+        SQL_BUSCA_LANCAMENTO =    '  SELECT LANCAMENTO.COD, PESSOA.NOME, LANCAMENTO.VALOR,' \
+                                        'LANCAMENTO.DOCUMENTO, LANCAMENTO.HISTORICO_OBSERVACAO,' \
+                                        'CONDICAO_PAGTO.DESCRICAO, CONDICAO_PAGTO.PARCELAS,' \
+                                        'LANCAMENTO.DATAEMISSAO, LANCAMENTO.DATAVENCIMENTO,' \
+                                        'SUBCATEGORIA.DESCRICAO FROM LANCAMENTO' \
+                                        'INNER JOIN PESSOA		    ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD' \
+                                        'INNER JOIN CONDICAO_PAGTO  ON LANCAMENTO.COD_CONDICAO_PAGTO	 = CONDICAO_PAGTO.COD' \
+                                        'INNER JOIN SUBCATEGORIA	ON LANCAMENTO.COD_SUBCATEGORIA	     = SUBCATEGORIA.COD'
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_LANCAMENTO)
         lancamento = traduz_lancamento(cursor.fetchall())
@@ -284,7 +286,7 @@ class LancamentoDao():
     #Tratativas do para o EXTRATO BANCARIO
     global SQL_BUSCA_LANCAMENTO_EXTRATO  
     SQL_BUSCA_LANCAMENTO_EXTRATO = 'SELECT LANCAMENTO.COD, LANCAMENTO.DOCUMENTO, LANCAMENTO.VALOR, ' \
-                                   'PESSOA.NOME, LANCAMENTO.DATAEMISSAO, LANCAMENTO.DEBITOCREDITO, ' \
+                                   "PESSOA.NOME, LANCAMENTO.DATAEMISSAO, IIF(LANCAMENTO.DEBITOCREDITO = 0, 'D', 'C'), " \
                                    'LANCAMENTO.PARCELA, LANCAMENTO.HISTORICO_OBSERVACAO ' \
                                    'FROM LANCAMENTO ' \
                                    'INNER JOIN PESSOA ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD ' \
@@ -320,14 +322,9 @@ class LancamentoDao():
     
 def traduz_lancamento(lancamento):
     def cria_lancamento_com_tupla(tupla):
-    
-
-
-        return Lancamento( valor=tupla[4], documento=tupla[8], historico_observacao=tupla[9],
+       
+        return Lancamento( cod_pessoa=tupla[2], valor=tupla[4], documento=tupla[8], historico_observacao=tupla[9],
                             cod_cond_pagamento=tupla[10], parcela=tupla[11], data_emissao=tupla[12], 
-                            data_vencimento=tupla[13],cod_subcategoria=tupla[17],cod_pessoa=tupla[1],
-                            valor_final=tupla[7],cod_funcionario=tupla[2],cod_conta_extrato=tupla[3],
-                            juros=tupla[5],desconto=tupla[6],data_pagamento=tupla[14],data_efetivacao=tupla[15],
-                            cod_form_pagamento=tupla[16],nivel_negociacao=tupla[18],codigo=tupla[0])
+                            data_vencimento=tupla[13],cod_subcategoria=tupla[17], codigo=tupla[0])
 
     return list(map(cria_lancamento_com_tupla, lancamento))
