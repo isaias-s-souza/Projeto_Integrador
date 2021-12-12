@@ -79,15 +79,13 @@
                         <span class="input-group-text">Valor</span>
                         <input style="min-width: 200px;" type="number" class="form-control" placeholder="R$00,00" >           
                         
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Cond.Pag</button>
-                            
-                            <ul class="dropdown-menu">Cond.Pag
+                        <div class="col-4">
+                            <option>Cond.Pag</option>
+                            <select class="form-select" id="">
                             {% for descricao in relacaoCondPagts %}
-                              <li value="{{descricao[COD_CONDICAO_PAGTO]}}" >{{descricao['PARCELA']}}</li>
+                            <option value="{{descricao[COD_CONDICAO_PAGTO]}}" >{{descricao['PARCELA']}}></option> 
                             {% endfor %}
-                            </ul>
-                            
+                            </select>
                         </div>
                             
                         <span class="input-group-text">Data Emissão</span>

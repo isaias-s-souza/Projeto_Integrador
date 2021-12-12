@@ -243,7 +243,7 @@ def alterar_cliente():
     return render_template('cliente.html', clientes=lista)
 
 #CONTA A PAGAR
-@app.route('/conta_a_pagar', methods=['POST', ])
+@app.route('/conta_a_pagar', methods=['POST','GET' ])
 def conta_a_pagar():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect('/login?proxima=')
@@ -251,15 +251,15 @@ def conta_a_pagar():
         condPagts = lancamento_dao.listar()
         relacaoCondPagtsCodLancamento = list()
         for descricao in condPagts:
-            relacaoFormPagCodLancamento.append({'COD_CONDICAO_PAGTO' : str(descricao.cod_cond_pagamento) +' - ' ,'PARCELA' : descricao.parcela+' - '})
+            relacaoCondPagtsCodLancamento.append({'CONDICAO_PAGTO.COD_CONDICAO_PAGTO' : str(descricao.cod_cond_pagamento), + ' - '  'CONDICAO_PAGTO.PARCELA' : descricao.parcela})
 
         return render_template('conta_a_pagar.html', relacaoCondPagts=relacaoCondPagtsCodLancamento)
 
 
-@app.route('/criar_conta_a_pagar', methods=['POST', ])
+@app.route('/criar_conta_a_pagar', methods=['POST','GET' ])
 def criar_conta_a_pagar():
 
-    id                      = request.form['id'] 
+    
     fornecedor              = request.form['fornecedor']
     valor                   = request.form['valor']
     documento               = request.form['documento']
@@ -272,9 +272,7 @@ def criar_conta_a_pagar():
 
     nova_conta_a_pagar = Lancamento(valor=valor, documento=documento, historico_observacao=historico_observacao,
                                     cod_cond_pagamento=cond_pagts, parcela=parcela,data_emissao=data_emissao,
-                                    data_vencimento=data_vencimento,cod_subcategoria=cod_subcategoria,cod_pessoa=fornecedor,
-                                    valor_final='',cod_funcionario='', cod_conta_extrato='',juros='',desconto='',data_pagamento='',
-                                    data_efetivacao='',cod_form_pagamento='',nivel_negociacao='',codigo=id)
+                                    data_vencimento=data_vencimento,cod_subcategoria=cod_subcategoria,cod_pessoa=fornecedor)
     
     lancamento_dao.salvar(nova_conta_a_pagar)
     lista = lancamento_dao.listar()
