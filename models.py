@@ -237,7 +237,7 @@ class ContaExtrato:
 class Lancamento():
     def __init__(self, valor, documento, historico_observacao,
                  cod_cond_pagamento, parcela,data_emissao, data_vencimento, 
-                 cod_subcategoria, cod_pessoa='',valor_final='',cod_funcionario='', cod_conta_extrato ='', 
+                 cod_subcategoria, debitocredito=False, cod_pessoa='',valor_final='',cod_funcionario='', cod_conta_extrato ='', 
                  juros='', desconto='',data_pagamento='',data_efetivacao='',cod_form_pagamento='', 
                  nivel_negociacao='',codigo=None ):
 
@@ -260,6 +260,7 @@ class Lancamento():
         self.__cod_form_pagamento   = cod_form_pagamento
         self.__cod_subcategoria     = cod_subcategoria
         self.__nivel_negociacao     = nivel_negociacao
+        self.__debitocredito        = debitocredito
 
     @property
     def codigo(self):
@@ -412,3 +413,11 @@ class Lancamento():
     @nivel_negociacao.setter
     def nivel_negociacao(self, nivel_negociacao):
         self.__nivel_negociacao = nivel_negociacao
+
+    @property
+    def debitocredito(self):
+        return self.__debitocredito
+
+    @debitocredito.setter
+    def debitocredito(self, debitocredito):
+        self.__debitocredito = debitocredito

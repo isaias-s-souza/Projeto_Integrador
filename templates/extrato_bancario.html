@@ -129,11 +129,11 @@
                 </div>
             </div>
             <br>
-                <form action="/consultar_conta_extrato"  method="post">
+                <form action="/consultar_conta_extrato" method="post">
                     <div class="row">
                         <div class="form-group">
-                            <label for="conta">Conta</h3>
-                            <select id="conta" class="form-control" style="width: 350px;">
+                            <label for="conta-pesquisa">Conta</h3>
+                            <select id="conta-pesquisa" name="conta-pesquisa" class="form-control" style="width: 350px;">
                                 <option selected>Escolha uma conta</option>
                                 {% for conta in relacaoContasConsulta %}
                                 <option value="{{conta['CODIGO']}}">{{conta['DESCRICAO']}}</option>
@@ -141,12 +141,12 @@
                             </select>
                         </div>
                         <div class="form-group col-4">
-                            <label for="data-inicio">Data de Início</label>
-                            <input type="date" id="data-inicio" name="data-inicio" class="form-control" placeholder="00/00/0000">
+                            <label for="data-inicio-pesquisa">Data de Início</label>
+                            <input type="date" id="data-inicio-pesquisa" name="data-inicio-pesquisa" class="form-control" placeholder="00/00/0000">
                         </div>    
                         <div class="form-group col-4">
-                            <label for="data-final">Data Final</label>
-                            <input type="date" id="data-final" name="data-final" class="form-control" placeholder="00/00/0000">
+                            <label for="data-final-pesquisa">Data Final</label>
+                            <input type="date" id="data-final-pesquisa" name="data-final-pesquisa" class="form-control" placeholder="00/00/0000">
                         </div>
                         
                     </div>
@@ -183,12 +183,15 @@
                 <thead class="thead-default">
                     <tr>
                         <th>Seleção</th>
+                        <th>Cod.</th>
                         <th>Documento</th>
                         <th>Valor</th>
                         <th>Nome</th>
                         <th>Emissão</th>
                         <th>Débito/Crédito</th>
+                        <th>Parcela</th>
                         <th>Saldo Acumulado</th>
+                        <th>Histórico</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -200,24 +203,6 @@
                         <td>21/10/2021</td>
                         <td>C</td>
                         <td>11560,00</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" name="selecao" value="46" style="border: 0px;width: 100%;height: 20px;"/></td>
-                        <td>46</td>
-                        <td>1021,85</td>
-                        <td>Fort. Ferragens</td>
-                        <td>21/10/2021</td>
-                        <td>D</td>
-                        <td>10538,15</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" name="selecao" value="47" style="border: 0px;width: 100%;height: 20px;" /></td>
-                        <td>47</td>
-                        <td>1000,21</td>
-                        <td>Ednaldo Pereira</td>
-                        <td>18/10/2021</td>
-                        <td>C</td>
-                        <td>11538,36</td>
                     </tr>
                 </tbody>
             </table>

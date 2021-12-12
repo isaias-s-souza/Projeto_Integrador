@@ -303,6 +303,25 @@ def extrato_bancario():
 
         return render_template('extrato_bancario.html', relacaoContasConsulta=relacaoNomeCodConta)
 
+@app.route('/consultar_conta_extrato', methods=['POST', ])
+def consultar_conta_extrato():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect('/login?proxima=')
+    else:
+        idConta     = request.form['conta-pesquisa'] 
+        dataInicio  = request.form['data-inicio-pesquisa']
+        dataFinal   = request.form['data-final-pesquisa']
+
+        lancamentos_efetivados      = lancamento_dao.listar_extrato_efetivados(idConta, dataInicio, dataFinal)
+        lancamentos_nao_efetivados  = lancamento_dao.listar_extrato_nao_efetivados(idConta)
+        saldos_extrato              = lancamento_dao.busca_saldos_conta(idConta, dataInicio, dataFinal)
+    
+        render_template('consultar_conta_extrato.html', lancamentos_efetivados=lancamentos_efetivados, 
+                                                        lancamentos_nao_efetivados=lancamentos_nao_efetivados,
+                                                        saldos_extrato=saldos_extrato)
+
+        
+
 @app.route('/login')
 def login():
     proxima = request.args.get('proxima')
