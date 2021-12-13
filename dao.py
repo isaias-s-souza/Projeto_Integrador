@@ -299,7 +299,7 @@ class LancamentoDao():
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_LANCAMENTO_EXTRATO_EFETIVADO, [id_conta, data_inicio_pesquisa, data_fim_pesquisa])
         return cursor.fetchall()
-    
+        
     def listar_extrato_nao_efetivados(self, id_conta):
         cursor = self.__db.cursor() 
         cursor.execute(SQL_BUSCA_LANCAMENTO_EXTRATO, id_conta)

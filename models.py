@@ -422,10 +422,4 @@ class Lancamento():
     @debito_credito.setter
     def debito_credito(self, debito_credito):
         self.__debito_credito = debito_credito
-		
-    def debitocredito(self):
-        return self.__debitocredito
 
-    @debitocredito.setter
-    def debitocredito(self, debitocredito):
-        self.__debitocredito = debitocredito
