@@ -269,15 +269,15 @@ class LancamentoDao():
         self.__db.commit()
         return lancamento
 
-    def listar(self):
-        SQL_BUSCA_LANCAMENTO =    '  SELECT LANCAMENTO.COD, PESSOA.NOME, LANCAMENTO.VALOR,' \
-                                        'LANCAMENTO.DOCUMENTO, LANCAMENTO.HISTORICO_OBSERVACAO,' \
-                                        'CONDICAO_PAGTO.DESCRICAO, CONDICAO_PAGTO.PARCELAS,' \
-                                        'LANCAMENTO.DATAEMISSAO, LANCAMENTO.DATAVENCIMENTO,' \
-                                        'SUBCATEGORIA.DESCRICAO FROM LANCAMENTO' \
-                                        'INNER JOIN PESSOA		    ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD' \
-                                        'INNER JOIN CONDICAO_PAGTO  ON LANCAMENTO.COD_CONDICAO_PAGTO	 = CONDICAO_PAGTO.COD' \
-                                        'INNER JOIN SUBCATEGORIA	ON LANCAMENTO.COD_SUBCATEGORIA	     = SUBCATEGORIA.COD'
+    def listar(self, filtro):
+        SQL_BUSCA_LANCAMENTO =  " SELECT PESSOA.COD, LANCAMENTO.VALOR, LANCAMENTO.DOCUMENTO, LANCAMENTO.HISTORICO_OBSERVACAO, " \
+                                " CONDICAO_PAGTO.COD, LANCAMENTO.PARCELA, LANCAMENTO.DATAEMISSAO, " \
+                                " LANCAMENTO.DATAVENCIMENTO, SUBCATEGORIA.COD, LANCAMENTO.COD" \
+                                " FROM LANCAMENTO" \
+                                " INNER JOIN PESSOA ON LANCAMENTO.COD_CLIENTE_FORNECEDOR = PESSOA.COD" \
+                                " INNER JOIN CONDICAO_PAGTO  ON LANCAMENTO.COD_CONDICAO_PAGTO	 = CONDICAO_PAGTO.COD" \
+                                " INNER JOIN SUBCATEGORIA	ON LANCAMENTO.COD_SUBCATEGORIA	     = SUBCATEGORIA.COD" + \
+                                filtro
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_LANCAMENTO)
         lancamento = traduz_lancamento(cursor.fetchall())
@@ -323,8 +323,8 @@ class LancamentoDao():
 def traduz_lancamento(lancamento):
     def cria_lancamento_com_tupla(tupla):
        
-        return Lancamento( cod_pessoa=tupla[2], valor=tupla[4], documento=tupla[8], historico_observacao=tupla[9],
-                            cod_cond_pagamento=tupla[10], parcela=tupla[11], data_emissao=tupla[12], 
-                            data_vencimento=tupla[13],cod_subcategoria=tupla[17], codigo=tupla[0])
+        return Lancamento( cod_pessoa=tupla[0], valor=tupla[1], documento=tupla[2], historico_observacao=tupla[3],
+                            cod_cond_pagamento=tupla[4], parcela=tupla[5], data_emissao=tupla[6], 
+                            data_vencimento=tupla[7],cod_subcategoria=tupla[8], codigo=tupla[9])
 
     return list(map(cria_lancamento_com_tupla, lancamento))
